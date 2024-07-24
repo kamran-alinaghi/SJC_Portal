@@ -1,8 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<head>
+    <link rel="stylesheet" href="~/css/HomePageStyle.css" />
+</head>
+<div class="whole-width">
+    <button type="button" class="btn btn-primary btn-lg center-element margin-large">Project 1</button>
+    <button type="button" class="btn btn-primary btn-lg center-element margin-large">Project 2</button>
+    <button type="button" class="btn btn-primary btn-lg center-element margin-large">Project 3</button>
+    <button type="button" class="btn btn-primary btn-lg center-element margin-large">+</button>
 </div>
+

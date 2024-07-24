@@ -2,17 +2,17 @@
 {
     public class BuildingDetails
     {
-        public string? BasementWalls { get; set; }
-        public string? MainFloor { get; set; }
-        public string? MainWalls { get; set; }
-        public string? UpperFloor { get; set; }
-        public string? UpperWalls { get; set;}
-        public string? Roof { get; set; }
-        public string? Stairs { get; set; }
-        public string? Seismic { get; set; }
-        public string? Windows { get; set; }
-        public string? BackFrame { get; set; }
-        public string? Decks    { get; set; }
-        public string? Drops { get; set; }
+        public double? BasementWalls { get; set; }
+        public double? MainFloor { get; set; }
+        public double? MainWalls { get; set; }
+        public double? UpperFloor { get; set; }
+        public double? UpperWalls { get; set;}
+        public double? Roof { get; set; }
+        public double? Stairs { get; set; }
+        public double? Seismic { get; set; }
+        public double? Windows { get; set; }
+        public double? BackFrame { get; set; }
+        public double? Decks    { get; set; }
+        public double? Drops { get; set; }
     }
 }

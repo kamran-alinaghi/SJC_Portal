@@ -1,0 +1,11 @@
+﻿.center-element{
+    grid-column:2;
+}
+.whole-width{
+    width:100vw;
+    display:grid;
+    grid-template-columns:auto auto auto;
+}
+.margin-large{
+    margin: 2vh 10vw;
+}
