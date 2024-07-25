@@ -20,6 +20,9 @@ mainContainer.innerHTML += Elems.CreateAddButton();
 for (let i = 0; i < projectButtonList.length; i++) {
     projectButtonList[i].onclick = function (e) { return ProjectBtnClick(e.target); };
 }
+for (let i = 0; i < smallButtonsList.length; i++) {
+    smallButtonsList[i].onclick = function (e) { return RedirectToTable(e); };
+}
 
 //Functions
 /**
@@ -36,4 +39,8 @@ function ProjectBtnClick(element) {
             Funcs.ResetButtonStatus(projectButtonList[i]);
         }
     }
+}
+
+function RedirectToTable(event) {
+    window.location.href="/Projects";
 }
