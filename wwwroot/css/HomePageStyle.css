@@ -1,11 +1,120 @@
 ﻿.center-element{
     grid-column:2;
 }
+
 .whole-width{
     width:100vw;
     display:grid;
-    grid-template-columns:auto auto auto;
+    grid-template-columns:auto Calc(max(40vw,250px)) auto;
 }
-.margin-large{
+
+.one-column{
+    display:grid;
+    grid-template-columns:auto;
+}
+
+.main-button {
+    border-radius: 10px;
+    background-color: rgb(125, 175, 255);
+}
+
+.main-button:hover{
+    background-color:rgb(100,150,225);
+}
+
+.main-button:active{
+    background-color:rgb(75,125,200);
+}
+
+.margin-large {
     margin: 2vh 10vw;
 }
+
+.vertical-margin{
+    margin: 2vh 0px;
+}
+
+.float-right {
+    margin-left: auto;
+    margin-right: 0px;
+    margin-top:5px;
+}
+
+.hidden-block{
+    opacity:0;
+    height:0px;
+}
+
+.margin-small {
+    margin: 5px 10vw;
+}
+
+.small-button {
+    width: 100px;
+    height:30px;
+}
+
+.large-button{
+    width: Calc(max(40vw,250px));
+    height:40px;
+}
+
+.shrink-button {
+    animation-name: shrinkBtn;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+.expand-button {
+    animation-name: expandBtn;
+    animation-duration: 0.5s;
+    animation-direction: reverse;
+    animation-fill-mode: forwards;
+}
+
+@keyframes shrinkBtn{
+    to{
+        width:Calc(max(30vw,200px));
+    }
+}
+@keyframes expandBtn{
+    to {
+        width: Calc(max(30vw,200px));
+    }
+}
+
+.shrink-div {
+    animation-name: shrinkDiv;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+.expand-div {
+    animation-name: expandDiv;
+    animation-duration:0.5s;
+    animation-fill-mode:forwards;
+}
+@keyframes shrinkDiv{
+    from{ 
+        height:0px;
+        opacity:0;
+    }
+    to{
+        height:30px;
+        opacity:1;
+    }
+}
+
+@keyframes expandDiv {
+    from {
+        height: 30px;
+        opacity: 1;
+    }
+    to {
+        height: 0px;
+        opacity: 0;
+    }
+}
+
+
+
+
