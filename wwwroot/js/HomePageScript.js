@@ -1,19 +1,22 @@
 ﻿//Imports
-import { CreateButtonBox, CreateAddButton } from "./Elements/ButtonBox.js";
-
+import * as Elems from "./Elements/ButtonBox.js";
+import * as Funcs from "./ActionFunctions.js";
 
 //Elements
 const projectButtonList = document.getElementsByClassName("project-button");
 const mainContainer = document.getElementById("main-container");
+const smallButtonsList = document.getElementsByClassName("small-button");
+const Buttons = [new Elems.ButtonBox("Project 1"), new Elems.ButtonBox("Project 2"), new Elems.ButtonBox("Project 3")];
 
 //Variables
 
-
 //Implementations
-mainContainer.innerHTML = CreateButtonBox("Project 1");
-mainContainer.innerHTML += CreateButtonBox("Project 2");
-mainContainer.innerHTML += CreateButtonBox("Project 3");
-mainContainer.innerHTML += CreateAddButton();
+for (let i = 0; i < Buttons.length; i++) {
+    mainContainer.innerHTML += Buttons[i].CreateButtonBox();
+}
+mainContainer.innerHTML += Elems.CreateAddButton();
+
+//Events
 for (let i = 0; i < projectButtonList.length; i++) {
     projectButtonList[i].onclick = function (e) { return ProjectBtnClick(e.target); };
 }
@@ -26,73 +29,11 @@ for (let i = 0; i < projectButtonList.length; i++) {
 function ProjectBtnClick(element) {
     for (let i = 0; i < projectButtonList.length; i++) {
         if (projectButtonList[i].innerHTML == element.innerHTML) {
-            ToggleAnimation(element);
-            ToggleRelatedBoxVisibility(document.getElementById(element.getAttribute("data-rel")));
+            Funcs.ToggleAnimation(element);
+            Funcs.ToggleRelatedBoxVisibility(document.getElementById(element.getAttribute("data-rel")));
         }
         else {
-            ResetButtonStatus(projectButtonList[i]);
+            Funcs.ResetButtonStatus(projectButtonList[i]);
         }
-    }
-    
-}
-/**
- * 
- * @param {HTMLElement} element
- * @param {string} className
- */
-function AddClass(element, className) {
-    if (!element.classList.contains(className)) {
-        element.classList.add(className);
-        return true;
-    }
-    return false;
-}
-/**
- * 
- * @param {HTMLElement} element
- * @param {string} className
- * @returns
- */
-function RemoveClass(element, className) {
-    if (element.classList.contains(className)) {
-        element.classList.remove(className);
-        return true;
-    }
-    return false;
-}
-/**
- * 
- * @param {HTMLElement} element
- */
-function ToggleAnimation(element) {
-    if (RemoveClass(element, "shrink-button")) {
-        AddClass(element, "expand-button");
-    }
-    else {
-        RemoveClass(element, "expand-button");
-        AddClass(element, "shrink-button")
-    }
-}
-/**
- * 
- * @param {HTMLElement} element
- */
-function ResetButtonStatus(element) {
-    if (RemoveClass(element, "shrink-button")) {
-        AddClass(element, "expand-button");
-        ToggleRelatedBoxVisibility(document.getElementById(element.getAttribute("data-rel")));
-    }
-}
-/**
- * 
- * @param {HTMLElement} element
- */
-function ToggleRelatedBoxVisibility(element) {
-    if (RemoveClass(element, "shrink-div")) {
-        AddClass(element, "expand-div");
-    }
-    else {
-        RemoveClass(element, "expand-div");
-        AddClass(element, "shrink-div");
     }
 }

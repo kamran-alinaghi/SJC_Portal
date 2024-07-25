@@ -8,22 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\js\CoreData.ts" />
-    <Content Remove="wwwroot\js\HomePageTypescript.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="MongoDB.EntityFrameworkCore" Version="8.0.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\Resources\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <TypeScriptCompile Include="wwwroot\js\CoreData.ts" />
-    <TypeScriptCompile Include="wwwroot\js\HomePageTypescript.ts" />
   </ItemGroup>
 
 </Project>
