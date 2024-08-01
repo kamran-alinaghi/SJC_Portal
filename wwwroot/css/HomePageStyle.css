@@ -13,6 +13,18 @@
     grid-template-columns:auto;
 }
 
+
+
+.two-column {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.two-column-small-left {
+    display: grid;
+    grid-template-columns: Calc(max(10vw,150px)) auto;
+}
+
 .main-button {
     border-radius: 10px;
     background-color: rgb(125, 175, 255);
@@ -31,18 +43,17 @@
 }
 
 .vertical-margin{
-    margin: 2vh 0px;
+    margin: Calc(min(2vh,20px)) 0px;
 }
 
 .float-right {
-    margin-left: auto;
-    margin-right: 0px;
-    margin-top:5px;
+    float:right;
 }
 
 .hidden-block{
     opacity:0;
     height:0px;
+    margin-top:5px;
 }
 
 .margin-small {
@@ -50,8 +61,18 @@
 }
 
 .small-button {
-    width: 100px;
+    width: 5vw;
+    min-width:45px;
+    height: 30px;
+    font-size: Calc(max(8px,0.8vw));
+    margin-left:0.25vw;
+}
+
+.compelete-button{
     height:30px;
+    width:10vw;
+    min-width:100px;
+    font-size:Calc(max(8px,0.8vw));
 }
 
 .large-button{
@@ -113,6 +134,111 @@
         height: 0px;
         opacity: 0;
     }
+}
+
+.flex-container{
+    display:flex;
+}
+
+.edit-button{
+    width:0px;
+    opacity:0;
+    margin-left:10px;
+}
+
+.edit-button-expand{
+    animation-name:editBtnExpan;
+    animation-duration:0.5s;
+    animation-fill-mode:forwards;
+}
+
+.edit-button-shrink {
+    animation-name: editBtnShrink;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes editBtnExpan{
+    from{
+        width:0px;
+        opacity:0;
+        font-size:0px;
+    }
+    to{
+        width:Calc(max(40px,10vw - 10px));
+        opacity:1;
+        font-size:16px;
+    }
+}
+
+@keyframes editBtnShrink {
+    from {
+        width: Calc(max(40px,10vw - 10px));
+        opacity: 1;
+        font-size: 16px;
+    }
+
+    to {
+        width: 0px;
+        opacity: 0;
+        font-size: 0px;
+    }
+}
+
+.project-details-container {
+    width:100vw;
+    height:100vh;
+    position:absolute;
+    top:0px;
+    left:0px;
+    background-color:rgba(0,0,0,0.8);
+    visibility:hidden;
+}
+
+.project-details{
+    width:40vw;
+    min-width:300px;
+    height:60vh;
+    background-color:paleturquoise;
+    position:relative;
+    left:Calc(min(30vw,(50vw - 150px)));
+    top:20vh;
+    overflow-y:auto;
+    border-radius:5px;
+}
+.close-button{
+    width:30px;
+    height:30px;
+    border-radius:5px;
+    border-style: none;
+    background-color:coral;
+    font-size:30px;
+    background-image:url("../Resources/Images/Close-sign.png");
+    background-repeat:no-repeat;
+    background-position:center;
+
+    
+    position:fixed;
+    right:Calc(min(30vw,50vw - 150px));
+}
+.close-button:hover{
+    background-color:orangered;
+}
+
+input{
+    margin: 5px 10px;
+    height:30px;
+}
+
+label{
+    margin-right:auto;
+    margin-left:10px;
+    margin-top:5px;
+}
+
+.save-cancle-btn{
+    width:80px;
+    margin:10px;
 }
 
 

@@ -2,14 +2,23 @@
  * 
  * @param {HTMLElement} element
  */
-export function ToggleAnimation(element) {
+export function ToggleBigButtonSize(element) {
+    const editBtn = document.getElementById(element.getAttribute("data-editButton"));
     if (RemoveClass(element, "shrink-button")) {
+        RemoveClass(editBtn, "edit-button-expand");
         AddClass(element, "expand-button");
+        AddClass(editBtn, "edit-button-shrink");
     }
     else {
         RemoveClass(element, "expand-button");
-        AddClass(element, "shrink-button")
+        RemoveClass(editBtn,"edit-button-shrink")
+        AddClass(element, "shrink-button");
+        AddClass(editBtn, "edit-button-expand");
     }
+}
+
+export function ToggleEditButtonSize(element) {
+    AddClass(element, "edit-button-shrink");
 }
 
 /**
@@ -59,8 +68,10 @@ export function ToggleRelatedBoxVisibility(element) {
  * @param {HTMLElement} element
  */
 export function ResetButtonStatus(element) {
+    const editBtn = document.getElementById(element.getAttribute("data-editButton"));
     if (RemoveClass(element, "shrink-button")) {
         AddClass(element, "expand-button");
+        AddClass(editBtn, "edit-button-shrink");
         ToggleRelatedBoxVisibility(document.getElementById(element.getAttribute("data-rel")));
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SJC_Portal.Data;
 
 namespace SJC_Portal.Controllers
 {
@@ -7,6 +8,12 @@ namespace SJC_Portal.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        [HttpPost]
+        public string Projects()
+        {
+            return SampleData.Project1;
         }
     }
 }

@@ -1,0 +1,130 @@
+﻿.center-element-horizental {
+    grid-column: 2;
+}
+
+.center-element-vertical{
+    grid-row:2;
+}
+
+.one-column {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows:auto auto auto;
+}
+
+.two-column {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.three-column {
+    display: grid;
+    grid-template-columns: Calc(max(50px,10vw)) auto Calc(max(50px,10vw));
+}
+
+.four-column{
+    display:grid;
+    grid-template-columns:auto auto auto auto;
+}
+
+.styled-table {
+    width: 100%;
+    /*height:100%;*/
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 25px 0;
+    font-size: 12px;
+    text-align: left;
+    border: 2px solid #009688;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+.styled-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+.styled-table th,.styled-table td {
+    padding: 0px;
+    border-right: 1px solid #009879;
+}
+.styled-table th:last-child,.styled-table td:last-child {border-right: none;}
+.styled-table tbody tr {border-bottom: 1px solid #dddddd;}
+.styled-table tbody tr:nth-of-type(even) {background-color: #ecf3fd;}
+.styled-table tbody tr:hover {background-color: #c8e6c9; color: #004d40;}
+.styled-table tbody tr:last-of-type {border-bottom: 2px solid #009879;}
+.styled-table tbody tr.active-row {font-weight: bold; color: #00796b;}
+.styled-table thead th {
+    background: linear-gradient(to right, #00b09b, #96c93d);
+    border-bottom: 1px solid #ddd;
+    padding: 0.5vh 0.3vw;
+    color: #ffffff;
+    font-size: 100%;
+    width: 100px;
+    text-transform: uppercase;
+}
+.styled-table th:first-child,.styled-table td:first-child {
+    border-left: none;
+}
+.styled-table th:last-child,.styled-table td:last-child {border-right: none;}
+.styled-table input{
+    border: none;
+    padding: 10px;
+    outline: none;
+    background-color: inherit; 
+    width:10vw;
+    min-width:100px;
+}
+.styled-table input:focus{background-color: #a0d2fa;}
+.scrollable{
+    overflow-y:auto;
+}
+.width-scroll{
+    overflow-x:auto;
+}
+
+.side-bars-left{
+    min-width:50px;
+    position:fixed;
+    left:Calc(max(2.5vw,10px));
+    top:Calc(50vh - max(2.5vw,15px));
+}
+
+.side-bars-right {
+    min-width: 50px;
+    position: fixed;
+    top: Calc(50vh - max(2.5vw,15px));
+    left: Calc(100vw - max(7.5vw,40px));
+}
+
+.control-button {
+    width: 5vw;
+    min-width: 30px;
+    height: 5vw;
+    min-height: 30px;
+    border-radius: Calc(max(2.5vw,15px));
+}
+
+.left-control-button {
+    background: url("../Resources/Images/Black-left-Arrow.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: Calc(max(1.5vw,15px));
+}
+
+.right-control-button {
+    background: url("../Resources/Images/Black-right-Arrow.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: Calc(max(1.5vw,15px));
+}
+.main-button-margin{
+    margin: 5px 2vw;
+}
+.main-button-width{
+    min-width:80px;
+    width:20vw;
+    max-width:400px;
+}

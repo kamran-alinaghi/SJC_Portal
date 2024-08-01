@@ -1,4 +1,31 @@
 ﻿@{
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
+<head>
+    <link rel="stylesheet" href="~/css/ProjectsPageStyle.css" />
+    <link rel="stylesheet" href="~/css/HomePageStyle.css" />
+</head>
 <h1>Projects</h1>
+<div id="main-container" class="one-column">
+    <div class="three-column">
+        <div class="two-column center-element-horizental">
+            <button class="main-button main-button-margin main-button-width">Summary</button>
+            <button class="main-button main-button-margin main-button-width">Save</button>
+            <button class="main-button main-button-margin main-button-width">Add</button>
+            <button class="main-button main-button-margin main-button-width">Remove</button>
+        </div>
+    </div>
+    
+    <div class="three-column">
+        <div class="side-bars-left">
+            <button type="button" class="control-button left-control-button center-element-horizental"></button>
+        </div>
+        <div id="root" class="width-scroll center-element-horizental">
+        </div>
+        <div class="side-bars-right">
+            <button type="button" class="control-button right-control-button center-element-horizental"></button>
+        </div>
+    </div>
+</div>
+
+<script type="module" src="./js/ProjectsPage.js"></script>
