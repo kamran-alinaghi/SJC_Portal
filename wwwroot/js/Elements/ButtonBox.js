@@ -4,21 +4,23 @@
 
 export class ButtonBox {
     Title;
+    Index
     #noSpaceTitle;
     /**
      * 
      * @param {string} title
      */
-    constructor(title) {
+    constructor(title, index) {
         this.Title = title;
         this.#noSpaceTitle = title.replace(/\s/g, '');
+        this.Index = index;
     }
 
     CreateButtonBox() {
         let res = '<div class="center-element one-column vertical-margin">';
         res += '<div class="flex-container">';
         res += '<button type="button" class="project-button large-button main-button" data-rel="' + this.#noSpaceTitle + '-section" data-editButton="' + this.#noSpaceTitle + '-editbutton">' + this.Title + '</button>';
-        res += '<button id="' + this.#noSpaceTitle + '-editbutton" type="button" class="main-button edit-button">Edit</button>';
+        res += '<button id="' + this.#noSpaceTitle + '-editbutton" type="button" class="main-button edit-button" data-index="' + this.Index + '">Edit</button>';
         res += '</div>';
 
         res += '<div id="' + this.#noSpaceTitle + '-section" class="hidden-block two-column">';
