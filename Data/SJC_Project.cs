@@ -6,6 +6,7 @@ namespace SJC_Portal.Data
     {
         public int Id { get; set; } 
         public string? Title { get; set; }
+        public bool? IsCompelete { get; set; }
         public string? ContractDate { get; set; }
         public double? TotalBudget { get; set; }
         public double? FramingBudget { get; set; }

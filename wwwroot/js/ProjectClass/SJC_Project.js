@@ -2,6 +2,7 @@
 export class SJC_Project {
     Id;
     Title;
+    IsCompelete;
     ContractDate;
     TotalBudget;
     FramingBudget;
@@ -14,6 +15,7 @@ export class SJC_Project {
     constructor() {
         this.Id = 0;
         this.Title = "";
+        this.IsCompelete = false;
         this.TotalBudget = 0;
         this.FramingBudget = 0;
         this.BuildingQty = 0;

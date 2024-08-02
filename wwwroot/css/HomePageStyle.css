@@ -30,12 +30,51 @@
     background-color: rgb(125, 175, 255);
 }
 
-.main-button:hover{
-    background-color:rgb(100,150,225);
+#add-new-project-button {
+    background-color: rgb(150,100,230);
+}
+#add-new-project-button:hover{
+    background-color: rgb(125,75,230);
+}
+#add-new-project-button:active{
+    background-color: rgb(125,175,230);
+}
+
+#past-projects {
+    background-color: rgb(100,255,200);
+}
+#past-projects:hover{
+    background-color: rgb(75,200,200);
+}
+
+#past-projects:active{
+    background-color: rgb(75,200,150);
+}
+
+.main-button:hover {
+    background-color: rgb(100,150,225);
 }
 
 .main-button:active{
     background-color:rgb(75,125,200);
+}
+
+.compelete-main-button {
+    border-radius: 10px;
+    background-color: rgb(200,255,200);
+}
+
+.sub-button {
+    border-radius: 10px;
+    background-color: rgb(100, 200, 255);
+}
+
+.sub-button:hover{
+    background-color: rgb(125, 225, 255);
+}
+
+.sub-button:active{
+    background-color: rgb(75, 175, 255);
 }
 
 .margin-large {
@@ -54,6 +93,7 @@
     opacity:0;
     height:0px;
     margin-top:5px;
+    visibility:hidden;
 }
 
 .margin-small {
@@ -75,9 +115,16 @@
     font-size:Calc(max(8px,0.8vw));
 }
 
-.large-button{
+.uncompelete-button {
+    height: 30px;
+    width: 10vw;
+    min-width: 100px;
+    font-size: Calc(max(8px,0.8vw));
+}
+
+.large-button {
     width: Calc(max(40vw,250px));
-    height:40px;
+    height: 40px;
 }
 
 .shrink-button {
@@ -114,25 +161,31 @@
     animation-duration:0.5s;
     animation-fill-mode:forwards;
 }
-@keyframes shrinkDiv{
-    from{ 
-        height:0px;
-        opacity:0;
+@keyframes expandDiv {
+    from {
+        height: 0px;
+        opacity: 0;
+        visibility:hidden;
     }
-    to{
-        height:30px;
-        opacity:1;
+
+    to {
+        height: 30px;
+        opacity: 1;
+        visibility:visible;
     }
 }
 
-@keyframes expandDiv {
+@keyframes shrinkDiv {
     from {
         height: 30px;
         opacity: 1;
+        visibility: visible;
     }
+
     to {
         height: 0px;
         opacity: 0;
+        visibility: hidden;
     }
 }
 
@@ -144,6 +197,7 @@
     width:0px;
     opacity:0;
     margin-left:10px;
+    visibility:hidden;
 }
 
 .edit-button-expand{
@@ -163,11 +217,13 @@
         width:0px;
         opacity:0;
         font-size:0px;
+        visibility:hidden;
     }
     to{
         width:Calc(max(40px,10vw - 10px));
         opacity:1;
         font-size:16px;
+        visibility:visible;
     }
 }
 
@@ -176,12 +232,14 @@
         width: Calc(max(40px,10vw - 10px));
         opacity: 1;
         font-size: 16px;
+        visibility:visible;
     }
 
     to {
         width: 0px;
         opacity: 0;
         font-size: 0px;
+        visibility:hidden;
     }
 }
 
@@ -239,6 +297,51 @@ label{
 .save-cancle-btn{
     width:80px;
     margin:10px;
+}
+
+.hidden-projects-container {
+    height: 0px;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.show-big-box{
+    animation-name:showBigBox;
+    animation-duration:0.5s;
+    animation-fill-mode:forwards;
+}
+
+.hide-big-box {
+    animation-name: hideBigBox;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes showBigBox{
+    from {
+        height: 0px;
+        opacity: 0;
+        visibility: hidden;
+    }
+    to {
+        height: auto;
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+@keyframes hideBigBox {
+    from {
+        height: auto;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    to {
+        height: 0px;
+        opacity: 0;
+        visibility: hidden;
+    }
 }
 
 
