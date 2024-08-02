@@ -35,7 +35,6 @@ export class ButtonBox {
             this.#CompeleteButtonClasses = ['compelete-button', 'sub-button'];
             this.#CompeleteBtnText = "Compelete";
         }
-
     }
 
     CreateButtonBox() {
@@ -48,9 +47,9 @@ export class ButtonBox {
         res += '<div id="' + this.Project.Id + '-section" class="hidden-block two-column">';
         res += '<button type="button" class="' + this.GetClasses(this.#CompeleteButtonClasses) + '" data-model-name="' + this.Project.Id + '-compelete" data-index="' + this.Project.Id + '">Move To ' + this.#CompeleteBtnText + '</button>';
         res += '<div>';
-        res += '<button type="button" class="small-button sub-button float-right" data-model-name="' + this.Project.Id + '-forming">Forming</button>';
-        res += '<button type="button" class="small-button sub-button float-right" data-model-name="' + this.Project.Id + '-framing">Framing</button>';
-        res += '<button type="button" class="small-button sub-button float-right" data-model-name="' + this.Project.Id + '-summary">Summary</button>';
+        res += '<button type="button" class="small-button sub-button float-right" data-model-name="' + this.Project.Id + '">Forming</button>';
+        res += '<button type="button" class="small-button sub-button float-right" data-model-name="' + this.Project.Id + '">Framing</button>';
+        res += '<button type="button" class="small-button sub-button float-right" data-model-name="' + this.Project.Id + '">Summary</button>';
         res += '</div>';
 
         res += '</div>';

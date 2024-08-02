@@ -93,6 +93,22 @@ export function GetLastId(list) {
     
     return res;
 }
+
+/**
+ * 
+ * @param {SJC_Project[]} array
+ * @param {number} id
+ */
+export function FindIndex(array, id) {
+    let res = -1;
+    for (let i = 0; i < array.length; i++) {
+        if (array[i].Id == id) {
+            res = i;
+            break;
+        }
+    }
+    return res;
+}
 /**
  * 
  * @param {HTMLElement} element

@@ -9,6 +9,8 @@ const mainContainer = document.getElementById("main-container");
 const smallButtonsList = document.getElementsByClassName("small-button");
 let projectDetailsContainer = document.getElementById("project-details-container");
 let saveEditProjectButton = document.getElementById("save-edit-project-button");
+let delProject = document.getElementById("del-edit-project-button");
+let editButtons = document.getElementsByClassName("edit-button");
 
 //Inputs
 const titleInput = document.getElementById("Title-input");
@@ -58,8 +60,7 @@ function ImpelimentEvents() {
     projectDetailsContainer = document.getElementById("project-details-container");
     const closeButton = document.getElementById("colse-button");
     const cancleEditProjectButton = document.getElementById("cancle-edit-project-button");
-    saveEditProjectButton = document.getElementById("save-edit-project-button");
-    const editButtons = document.getElementsByClassName("edit-button");
+    editButtons = document.getElementsByClassName("edit-button");
     const moveToCompleteButtons = document.getElementsByClassName("compelete-button");
     const moveToCurrenButtons = document.getElementsByClassName("uncompelete-button");
     const pastProjectsButton = document.getElementById("past-projects");
@@ -72,7 +73,7 @@ function ImpelimentEvents() {
     }
     for (let i = 0; i < editButtons.length; i++) {
         editButtons[i].onclick = function (e) {
-            const index = parseInt(e.target.getAttribute("data-index"));
+            const index = Funcs.FindIndex(SJC_ProjectList, parseInt(e.target.getAttribute("data-index")));
             return OpenProjectDetails(index);
         };
     }
@@ -83,9 +84,11 @@ function ImpelimentEvents() {
         moveToCurrenButtons[i].onclick = function (e) { return ChangeCompeleteStatus(e.target, false); };
     }
     addNewProjectButton.onclick = function (e) { return OpenProjectDetails(null); };
-    closeButton.onclick = function (e) { return CloseProjectDetails(e); };
+    closeButton.onclick = function () { return CloseProjectDetails(); };
     cancleEditProjectButton.onclick = function (e) { return CloseProjectDetails(e); };
     saveEditProjectButton.onclick = function (e) { return SaveProjectDetails(e); };
+
+    delProject.onclick = function (e) { return DeleteProject(e.target); };
     pastProjectsButton.onclick = function (e) { return Funcs.ToggleBigBoxVisibility(e.target); }
 }
 
@@ -120,6 +123,7 @@ function RedirectToTable(event) {
  */
 function OpenProjectDetails(index) {
     saveEditProjectButton.setAttribute("data-index", index);
+    delProject.setAttribute("data-index", index);
     let tempProject = new SJC_Project();
     if (index != null) { tempProject = SJC_ProjectList[index]; }
     titleInput.value = tempProject.Title;
@@ -133,7 +137,7 @@ function OpenProjectDetails(index) {
     projectDetailsContainer.style.visibility = "visible";
 }
 
-function CloseProjectDetails(event) {
+function CloseProjectDetails() {
     projectDetailsContainer.style.visibility = "hidden";
 }
 
@@ -163,7 +167,7 @@ function SaveProjectDetails(event) {
 
     ShowProjectButtons();
 
-    projectDetailsContainer.style.visibility = "hidden";
+    CloseProjectDetails();
 }
 /**
  * 
@@ -171,7 +175,7 @@ function SaveProjectDetails(event) {
  * @param {boolean} isCompelete
  */
 function ChangeCompeleteStatus(element, isCompelete) {
-    const index = parseInt(element.getAttribute("data-index"));
+    const index = Funcs.FindIndex(SJC_ProjectList, parseInt(element.getAttribute("data-index")));
     let word = isCompelete ? "compeleted" : "current";
     let answer = window.confirm("Are you sure you want to move " +
         Funcs.toUnicodeVariant(SJC_ProjectList[index].Title, 'bold sans', 'bold') +
@@ -179,6 +183,31 @@ function ChangeCompeleteStatus(element, isCompelete) {
     if (answer) {
         SJC_ProjectList[index].IsCompelete = isCompelete;
         ShowProjectButtons();
+    }
+}
+/**
+ * 
+ * @param {HTMLElement} element
+ */
+function DeleteProject(element) {
+    const indexStr = element.getAttribute("data-index");
+    if (indexStr != "null" && indexStr != null) {
+        const index = parseInt(indexStr);
+        let answer1 = window.confirm("Do you want to remove " +
+            Funcs.toUnicodeVariant(SJC_ProjectList[index].Title, 'bold sans', 'bold') + "?");
+        if (answer1) {
+            let answer2 = window.confirm("Are you sure about removing " +
+                Funcs.toUnicodeVariant(SJC_ProjectList[index].Title, 'bold sans', 'bold') +
+                "?\nYou won't have access to its data anymore!");
+            if (answer2) {
+                SJC_ProjectList.splice(index, 1);
+                ShowProjectButtons();
+                CloseProjectDetails();
+            }
+        }
+    }
+    else {
+
     }
 }
 

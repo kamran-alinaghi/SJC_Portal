@@ -25,9 +25,17 @@
     grid-template-columns: Calc(max(10vw,150px)) auto;
 }
 
-.main-button {
-    border-radius: 10px;
-    background-color: rgb(125, 175, 255);
+.del-button{
+    border-radius:10px;
+    background-color:rgb(255,100,100);
+}
+
+.del-button:hover{
+    background-color:rgb(200,80,80);
+}
+
+.del-button:active{
+    background-color:rgb(200,50,50);
 }
 
 #add-new-project-button {
@@ -53,6 +61,11 @@
 
 .main-button:hover {
     background-color: rgb(100,150,225);
+}
+
+.main-button {
+    border-radius: 10px;
+    background-color: rgb(125, 175, 255);
 }
 
 .main-button:active{
