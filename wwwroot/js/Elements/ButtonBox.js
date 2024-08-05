@@ -40,16 +40,16 @@ export class ButtonBox {
     CreateButtonBox() {
         let res = '<div class="center-element one-column vertical-margin">';
         res += '<div class="flex-container">';
-        res += '<button id="btn-' + this.Project.Id +'" type="button" class="project-button large-button ' + this.GetClasses(this.#ProjectBtnClasses) + '" data-rel="' + this.Project.Id + '-section" data-editButton="' + this.Project.Id + '-editbutton">' + this.Project.Title + '</button>';
-        res += '<button id="' + this.Project.Id + '-editbutton" type="button" class="' + this.GetClasses(this.#EditBtnClasses) + '" data-index="' + this.Project.Id + '">Edit</button>';
+        res += '<button id="btn-' + this.Project._id +'" type="button" class="project-button large-button ' + this.GetClasses(this.#ProjectBtnClasses) + '" data-rel="' + this.Project._id + '-section" data-editButton="' + this.Project._id + '-editbutton">' + this.Project.Title + '</button>';
+        res += '<button id="' + this.Project._id + '-editbutton" type="button" class="' + this.GetClasses(this.#EditBtnClasses) + '" data-index="' + this.Project._id + '">Edit</button>';
         res += '</div>';
 
-        res += '<div id="' + this.Project.Id + '-section" class="hidden-block two-column">';
-        res += '<button type="button" class="' + this.GetClasses(this.#CompeleteButtonClasses) + '" data-model-name="' + this.Project.Id + '-compelete" data-index="' + this.Project.Id + '">Move To ' + this.#CompeleteBtnText + '</button>';
+        res += '<div id="' + this.Project._id + '-section" class="hidden-block two-column">';
+        res += '<button type="button" class="' + this.GetClasses(this.#CompeleteButtonClasses) + '" data-model-name="' + this.Project._id + '-compelete" data-index="' + this.Project._id + '">Move To ' + this.#CompeleteBtnText + '</button>';
         res += '<div>';
-        res += '<button type="button" class="small-button sub-button float-right" data-model-name="' + this.Project.Id + '">Forming</button>';
-        res += '<button type="button" class="small-button sub-button float-right" data-model-name="' + this.Project.Id + '">Framing</button>';
-        res += '<button type="button" class="small-button sub-button float-right" data-model-name="' + this.Project.Id + '">Summary</button>';
+        res += '<button type="button" class="small-button sub-button float-right" data-model-name="' + this.Project._id + '">Forming</button>';
+        res += '<button type="button" class="small-button sub-button float-right" data-model-name="' + this.Project._id + '">Framing</button>';
+        res += '<button type="button" class="small-button sub-button float-right" data-model-name="' + this.Project._id + '">Summary</button>';
         res += '</div>';
 
         res += '</div>';

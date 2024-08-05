@@ -4,7 +4,7 @@ namespace SJC_Portal.Data
 {
     public class SJC_Project
     {
-        public int Id { get; set; } 
+        public ObjectId? _id { get; set; }
         public string? Title { get; set; }
         public bool? IsCompelete { get; set; }
         public string? ContractDate { get; set; }

@@ -87,7 +87,7 @@ export function GetLastId(list) {
     let res = -1;
     if (list.length > 0) {
         for (let i = 0; i < list.length; i++) {
-            if (list[i].Id > res) { res = list[i].Id; }
+            if (list[i]._id > res) { res = list[i]._id }
         }
     }
     
@@ -97,12 +97,12 @@ export function GetLastId(list) {
 /**
  * 
  * @param {SJC_Project[]} array
- * @param {number} id
+ * @param {string} id
  */
 export function FindIndex(array, id) {
     let res = -1;
     for (let i = 0; i < array.length; i++) {
-        if (array[i].Id == id) {
+        if (array[i]._id == id) {
             res = i;
             break;
         }

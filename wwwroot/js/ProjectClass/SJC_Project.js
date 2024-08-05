@@ -1,6 +1,6 @@
 ﻿import { Invoice } from "./Invoice.js";
 export class SJC_Project {
-    Id;
+    _id;
     Title;
     IsCompelete;
     ContractDate;
@@ -13,9 +13,10 @@ export class SJC_Project {
     InvoiceList;
 
     constructor() {
-        this.Id = 0;
+        this._id = "";
         this.Title = "";
         this.IsCompelete = false;
+        this.ContractDate = "";
         this.TotalBudget = 0;
         this.FramingBudget = 0;
         this.BuildingQty = 0;
