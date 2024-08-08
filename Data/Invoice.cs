@@ -2,7 +2,7 @@
 {
     public class Invoice
     {
-        public string? InvoiceNumber { get; set; }
+        public int? InvoiceNumber { get; set; }
         public string? InvoiceDate { get; set; }
         public IEnumerable<BuildingDetails>? Buildings { get; set; }
         public BuildingDetails? ToBeInvoiced { get; set; }

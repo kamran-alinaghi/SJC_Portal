@@ -128,3 +128,13 @@
     width:20vw;
     max-width:400px;
 }
+.fixed-container{
+    position:fixed;
+    width:100vw;
+    background-color:white;
+    top:0px;
+    left:0px;
+}
+#root{
+    margin-top:100px;
+}

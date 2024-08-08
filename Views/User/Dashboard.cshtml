@@ -1,0 +1,73 @@
+﻿@model SJC_Portal.Data.UserInfo
+@{
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+<head>
+    <link rel="stylesheet" href="~/css/DashboardStyle.css" />
+</head>
+
+<div class="dashboard-container">
+    <h2>Dashboard</h2>
+    <h3>Welcome @Html.DisplayFor(m=>m.Name)</h3>
+    <form asp-controller="User" asp-action="EditUser" method="post">
+        <div class ="dashboard-form">
+            <label for="name">Name:</label>
+            <input id="name" name="name" type="text" value="@Html.DisplayFor(mbox=>mbox.Name)" required />
+
+            <label for="family">Family:</label>
+            <input id="family" name="family" type="text" value="@Html.DisplayFor(mbox=>mbox.Family)" />
+
+            <label for="email">Email:</label>
+            <input id="email" name="email" type="text" value="@Html.DisplayFor(mbox=>mbox.Email)" required />
+
+            <label for="streetAddress">Street Address:</label>
+            <input id="streetAddress" name="streetAddress" type="text" value="@Html.DisplayFor(m=>m.StreetAddress)" />
+
+            <label for="city">City:</label>
+            <input id="city" name="city" type="text" value="@Html.DisplayFor(mbox=>mbox.City)" />
+
+            <label for="province">Province:</label>
+            <input id="province" name="province" type="text" value="@Html.DisplayFor(mbox=>mbox.Province)" />
+
+            <label for="country">Country:</label>
+            <input id="country" name="country" type="text" value="@Html.DisplayFor(mbox=>mbox.Country)" />
+
+            <label for="postalCode">Postal Code:</label>
+            <input id="postalCode" name="postalCode" type="text" value="@Html.DisplayFor(mbox=>mbox.PostalCode)" />
+
+            <label for="birthDate">Birth Date:</label>
+            <input id="birthDate" name="birthDate" type="date" value="@Html.DisplayFor(mbox=>mbox.Birthdate)" />
+        </div>
+        
+        <input id="submit-button" class="submit-button" type="submit" value="Save Changes" />
+    </form>
+
+    <button id="username-pass-change" class="username-pass-change">Change Security</button>
+</div>
+<div id="security-container">
+    <div id="security-form">
+        <button id="close-button" class="close-button"></button>
+        <div class="one-column">
+            <label for="username">Username:</label>
+            <input id="username" name="username" type="text" value="@Html.DisplayFor(mbox=>mbox.Username)" disabled />
+
+            <label for="newusername">New Username:</label>
+            <input id="newusername" name="newusername" type="text" value="@Html.DisplayFor(mbox=>mbox.Username)" required />
+
+            <label for="oldpass">Old Password:</label>
+            <input id="oldpass" name="oldpass" type="password" required />
+
+            <label for="newpass">New Password:</label>
+            <input id="newpass" name="newpass" type="text" required />
+
+            <label for="confirmpass">Confirm Password:</label>
+            <input id="confirmpass" name="confirmpass" type="text" required />
+
+            <button id="save-button" class="submit-button">Save</button>
+            <button id="cancle-button" class="close-button">Cancle</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script type="module" src="/js/DashboardPageScript.js"></script>

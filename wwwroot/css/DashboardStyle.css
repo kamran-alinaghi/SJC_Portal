@@ -1,0 +1,104 @@
+﻿.one-column {
+    display: grid;
+    grid-template-columns: auto;
+}
+
+.dashboard-container{
+    width:80vw;
+    max-width:1200px;
+    min-width:300px;
+    height:80vh;
+    margin:auto;
+}
+.dashboard-form{
+    display:grid;
+    grid-template-columns: Calc(max( 20vw,130px)) auto;
+}
+
+input,label{
+    margin:5px 10px;
+}
+input{
+    min-width:150px;
+    border-radius:10px;
+    padding:5px;
+}
+#submit-button {
+    margin: 5px 10px;
+    min-width: 150px;
+    border-radius: 10px;
+    padding: 5px;
+}
+.submit-button {
+    background-color: rgb(125, 175, 255);
+}
+.submit-button:hover {
+    background-color: rgb(100,150,225);
+}
+
+.submit-button:active {
+    background-color: rgb(75,125,200);
+}
+
+.username-pass-change {
+    border-radius:10px;
+    min-width:150px;
+    margin: 5px 10px;
+    padding: 5px;
+    background-color: rgb(255,150,50);
+}
+.username-pass-change:hover{
+    background-color: rgb(255,120,40);
+}
+
+.username-pass-change:active{
+    background-color: rgb(200,120,40);
+}
+
+#security-container {
+    width:100vw;
+    height:100vh;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(0,0,0,0.8);
+    display:none;
+}
+#security-form{
+    width:40vw;
+    min-width:250px;
+    height:600px;
+    background-color:yellow;
+    border-radius:10px;
+    position:relative;
+    left:Calc(min(30vw, (50vw - 125px)));
+    top:Calc(50vh - 300px);
+}
+
+#close-button {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    border-style: none;
+    
+    font-size: 30px;
+    background-image: url("../Resources/Images/Close-sign.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    position: fixed;
+    right: Calc(min(30vw,(50vw - 125px)));
+}
+.close-button {
+    background-color: coral;
+}
+.close-button:hover {
+    background-color: orangered;
+}
+
+#save-button,#cancle-button{
+    width:150px;
+    margin:10px auto;
+    border-radius:10px;
+}
+
+

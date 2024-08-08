@@ -5,14 +5,20 @@
     <link rel="stylesheet" href="~/css/ProjectsPageStyle.css" />
     <link rel="stylesheet" href="~/css/HomePageStyle.css" />
 </head>
-<h1>Projects</h1>
 <div id="main-container" class="one-column">
-    <div class="three-column">
+    <div class="three-column fixed-container">
+        <div class="center-element-horizental" style="margin-top:50px;">
+            <h1>Projects</h1>
+        </div>
         <div class="two-column center-element-horizental">
             <button class="main-button main-button-margin main-button-width">Summary</button>
-            <button class="main-button main-button-margin main-button-width">Save</button>
+            <div>
+                <button class="main-button main-button-margin main-button-width" style="float:right">Save</button>
+            </div>
             <button class="main-button main-button-margin main-button-width">Add</button>
-            <button class="main-button main-button-margin main-button-width">Remove</button>
+            <div>
+                <button class="main-button main-button-margin main-button-width" style="float:right">Remove</button>
+            </div>
         </div>
     </div>
     
@@ -28,4 +34,4 @@
     </div>
 </div>
 
-<script type="module" src="./js/ProjectsPage.js"></script>
+<script type="module" src="/js/ProjectsPage.js"></script>

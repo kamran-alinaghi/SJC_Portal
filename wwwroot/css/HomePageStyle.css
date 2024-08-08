@@ -1,6 +1,10 @@
 ﻿.center-element{
     grid-column:2;
 }
+#main-container {
+    position:relative;
+    top:50px;
+}
 
 .whole-width{
     width:100vw;

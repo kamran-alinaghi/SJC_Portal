@@ -6,7 +6,7 @@ import { SJC_Project } from "./ProjectClass/SJC_Project.js";
 //Elements
 const projectButtonList = document.getElementsByClassName("project-button");
 const mainContainer = document.getElementById("main-container");
-const smallButtonsList = document.getElementsByClassName("small-button");
+let smallButtonsList = document.getElementsByClassName("small-button");
 let projectDetailsContainer = document.getElementById("project-details-container");
 let saveEditProjectButton = document.getElementById("save-edit-project-button");
 let delProject = document.getElementById("del-edit-project-button");
@@ -113,12 +113,13 @@ function ImpelimentEvents() {
     const moveToCompleteButtons = document.getElementsByClassName("compelete-button");
     const moveToCurrenButtons = document.getElementsByClassName("uncompelete-button");
     const pastProjectsButton = document.getElementById("past-projects");
+    smallButtonsList = document.getElementsByClassName("small-button");
 
     for (let i = 0; i < projectButtonList.length; i++) {
         projectButtonList[i].onclick = function (e) { return ProjectBtnClick(e.target); };
     }
     for (let i = 0; i < smallButtonsList.length; i++) {
-        smallButtonsList[i].onclick = function (e) { return RedirectToTable(e); };
+        smallButtonsList[i].onclick = function (e) { return RedirectToTable(e.target); };
     }
     for (let i = 0; i < editButtons.length; i++) {
         editButtons[i].onclick = function (e) {
@@ -161,8 +162,13 @@ function ProjectBtnClick(element) {
 
 
 //temporary -------------------------------------------------
-function RedirectToTable(event) {
-    window.location.href = "/Projects";
+/**
+ * 
+ * @param {HTMLElement} element
+ */
+function RedirectToTable(element) {
+    //alert(element.getAttribute("data-model-name") + "/" + element.innerHTML);
+    window.location.href = "/projects/index";
 }
 //temporary -------------------------------------------------
 
@@ -207,7 +213,6 @@ function SaveProjectDetails() {
     else {
         const id = saveEditProjectButton.getAttribute("data-index");
         const index = Funcs.FindIndex(SJC_ProjectList, id);
-
         SJC_ProjectList[index].Title = titleInput.value;
         SJC_ProjectList[index].ContractDate = contractDateInput.value;
         SJC_ProjectList[index].TotalBudget = totalBudgetInput.value;
@@ -263,4 +268,10 @@ function DeleteProject(element) {
 
     }
 }
+/**
+ * 
+ * @param {HTMLElement} element
+ */
+function SmallButtonClick(element) {
 
+}
