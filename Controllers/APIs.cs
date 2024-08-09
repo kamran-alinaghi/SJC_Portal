@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using Newtonsoft.Json;
 using SJC_Portal.Data;
+using SJC_Portal.Data.Enums;
+using SJC_Portal.Data.Parameters;
 using System.Net;
 using System.Reflection;
 
@@ -59,7 +62,9 @@ namespace SJC_Portal.Controllers
                     .Set(p => p.FramingBudget, param.FramingBudget)
                     .Set(p => p.BuildingQty, param.BuildingQty)
                     .Set(p => p.FramingContractNo, param.FramingContractNo)
-                    .Set(p => p.FormingContractNo, param.FormingContractNo);
+                    .Set(p => p.FormingContractNo, param.FormingContractNo)
+                    .Set(p => p.FramingInvoiceList, param.FramingInvoiceList)
+                    .Set(p => p.FormingInvoiceList, param.FormingInvoiceList);
                 collection.UpdateOne(filter, update);
             }
         }
@@ -75,13 +80,13 @@ namespace SJC_Portal.Controllers
             }
         }
         [HttpPost]
-        public string GetInvoices()
+        public string GetFramingInvoices()
         {
             SJC_Project? project = GetRequestBody<SJC_Project>();
             if (project != null)
             {
                 SJC_Project tempProject = GetOneProject(project._id).Result;
-                return Newtonsoft.Json.JsonConvert.SerializeObject(tempProject.InvoiceList);
+                return Newtonsoft.Json.JsonConvert.SerializeObject(tempProject.FramingInvoiceList);
             }
             else { return ""; }
         }
@@ -100,6 +105,57 @@ namespace SJC_Portal.Controllers
             currentUser.Password = param.NewPassword;
             SetUserInSession(currentUser);
         }
+
+        [HttpPost]
+        public void SaveTableTitle()
+        {
+            TableNameParam? param = GetRequestBody<TableNameParam>();
+            if (param != null)
+            {
+                TableNameInSession(GetSetAction.Set, param);
+            }
+        }
+
+        [HttpPost]
+        public string GetTableName()
+        {
+            TableNameParam? param = TableNameInSession(GetSetAction.Get, null);
+            return param.Name;
+        }
+
+        [HttpPost]
+        public string GetProjectById()
+        {
+            TableNameParam? param = TableNameInSession(GetSetAction.Get, null);
+            FilterDefinition<SJC_Project> filter = Builders<SJC_Project>.Filter.Eq(p => p._id, param._id);
+            SJC_Project project = collection.Find(filter).FirstOrDefaultAsync().Result;
+            return Newtonsoft.Json.JsonConvert.SerializeObject(project);
+        }
+
+        [HttpPost]
+        public void UpdateProjectInvoices()
+        {
+            SJC_Project? param = GetRequestBody<SJC_Project>();
+            FilterDefinition<SJC_Project> filter = Builders<SJC_Project>.Filter.Eq(p => p._id, param._id);
+            UpdateDefinition<SJC_Project> update = Builders<SJC_Project>.Update
+                .Set(p => p.FramingInvoiceList, param.FramingInvoiceList)
+                .Set(p => p.FormingInvoiceList, param.FormingInvoiceList)
+                .Set(p => p.FramingTitles, param.FramingTitles);
+            collection.UpdateOne(filter, update);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -152,6 +208,30 @@ namespace SJC_Portal.Controllers
                 string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
                 _contex.HttpContext.Session.SetString("user", jsonUser);
             }
+        }
+
+        private TableNameParam? TableNameInSession(GetSetAction act, TableNameParam? p)
+        {
+            TableNameParam? res = new TableNameParam();
+            switch (act)
+            {
+                case GetSetAction.Set:
+                    if (p != null)
+                    {
+                        _contex.HttpContext.Session.SetString("tableName", p.Name);
+                        _contex.HttpContext.Session.SetString("projectId", Newtonsoft.Json.JsonConvert.SerializeObject(p._id));
+                    }
+                    res = null;
+                    break;
+                case GetSetAction.Get:
+                    res.Name = _contex.HttpContext.Session.GetString("tableName");
+                    res._id = BsonSerializer.Deserialize<ObjectId>(_contex.HttpContext.Session.GetString("projectId"));
+                    break;
+                default:
+                    res = null;
+                    break;
+            }
+            return res;
         }
     }
 }

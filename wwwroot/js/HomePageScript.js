@@ -2,6 +2,9 @@
 import * as Elems from "./Elements/ButtonBox.js";
 import * as Funcs from "./ActionFunctions.js";
 import { SJC_Project } from "./ProjectClass/SJC_Project.js";
+import { FramingInvoice } from "./ProjectClass/FramingInvoice.js";
+import { FormingInvoice } from "./ProjectClass/FormingInvoice.js";
+import { PairList, PairDetails } from "./ProjectClass/PairDetails.js";
 
 //Elements
 const projectButtonList = document.getElementsByClassName("project-button");
@@ -102,6 +105,18 @@ function DeleteProjectFromDB(project) {
         });
 }
 
+function SaveTableName(name, id) {
+    const param = {
+        _id: id,
+        Name: name
+    }
+    $.post("/apis/SaveTableTitle",
+        JSON.stringify(param),
+        function (data, status) {
+
+        });
+}
+
 
 //Events
 function ImpelimentEvents() {
@@ -168,7 +183,10 @@ function ProjectBtnClick(element) {
  */
 function RedirectToTable(element) {
     //alert(element.getAttribute("data-model-name") + "/" + element.innerHTML);
-    window.location.href = "/projects/index";
+    if (element.innerHTML == "Framing" || element.innerHTML == "Forming") {
+        SaveTableName(element.innerHTML, element.getAttribute("data-model-name"));
+        window.location.href = "/projects/index";
+    }
 }
 //temporary -------------------------------------------------
 
@@ -198,6 +216,7 @@ function CloseProjectDetails() {
 }
 
 function SaveProjectDetails() {
+    let n = 0;
     if (saveEditProjectButton.getAttribute("data-index") == "null") {
         const res = new SJC_Project();
         res._id = null;
@@ -205,7 +224,29 @@ function SaveProjectDetails() {
         res.ContractDate = contractDateInput.value;
         res.TotalBudget = totalBudgetInput.value;
         res.FramingBudget = framingBudgetInput.value;
-        res.BuildingQty = buildingQtyInput.value;
+        res.FramingTitles = ["Basement Walls", "Main Floor", "Main Walls", "Upper Floor", "Upper Walls", "Roof", "Stairs", "Seismic", "Windows", "Backframe", "Decks", "Drops"];
+        n = parseInt(buildingQtyInput.value);
+        res.BuildingQty = n < 1 ? 1 : n;
+
+        res.FramingInvoiceList.push(new FramingInvoice());
+        for (let i = 0; i < res.BuildingQty; i++) {
+            res.FramingInvoiceList[0].Buildings.push(new PairList());
+            res.FramingInvoiceList[0].ToBeInvoiced.push(new PairList());
+            for (let j = 0; j < res.FramingTitles.length; j++) {
+                res.FramingInvoiceList[0].Buildings[i].Pairs.push(new PairDetails());
+                res.FramingInvoiceList[0].Buildings[i].Pairs[j].Title = res.FramingTitles[j];
+                res.FramingInvoiceList[0].ToBeInvoiced[i].Pairs.push(new PairDetails());
+                res.FramingInvoiceList[0].ToBeInvoiced[i].Pairs[j].Title = res.FramingTitles[j];
+            }
+        }
+        res.FormingInvoiceList.push(new FormingInvoice());
+        for (let i = 0; i < res.BuildingQty; i++) {
+            res.FormingInvoiceList[0].Buildings.Pairs.push(new PairDetails());
+            res.FormingInvoiceList[0].Buildings.Pairs[i].Title = "Building " + (i + 1).toString();
+            res.FormingInvoiceList[0].ToBeInvoiced.Pairs.push(new PairDetails());
+            res.FormingInvoiceList[0].ToBeInvoiced.Pairs[i].Title = "Building " + (i + 1).toString();
+        }
+
         res.FramingContractNo = framingContractNo.value;
         res.FormingContractNo = formingContractNo.value;
         SaveProjectToDB(res);
@@ -217,7 +258,42 @@ function SaveProjectDetails() {
         SJC_ProjectList[index].ContractDate = contractDateInput.value;
         SJC_ProjectList[index].TotalBudget = totalBudgetInput.value;
         SJC_ProjectList[index].FramingBudget = framingBudgetInput.value;
-        SJC_ProjectList[index].BuildingQty = buildingQtyInput.value;
+        n = parseInt(buildingQtyInput.value);
+        if (n < 1) { n = 1; }
+        if (SJC_ProjectList[index].BuildingQty > n) {
+            let answer = window.confirm('You may loose some data because of reduction in the "Buildings" number. Do you wish to continue?');
+            if (answer) {
+                for (let i = 0; i < SJC_ProjectList[index].FramingInvoiceList.length; i++) {
+                    SJC_ProjectList[index].FramingInvoiceList[i].Buildings.splice(n, (SJC_ProjectList[index].BuildingQty - n));
+                    SJC_ProjectList[index].FramingInvoiceList[i].ToBeInvoiced.splice(n, (SJC_ProjectList[index].BuildingQty - n));
+                }
+                for (let i = 0; i < SJC_ProjectList[index].FormingInvoiceList.length; i++) {
+                    SJC_ProjectList[index].FormingInvoiceList[i].Buildings.Pairs.splice(n, (SJC_ProjectList[index].BuildingQty - n));
+                    SJC_ProjectList[index].FormingInvoiceList[i].ToBeInvoiced.Pairs.splice(n, (SJC_ProjectList[index].BuildingQty - n));
+                }
+            }
+        }
+        else if (SJC_ProjectList[index].BuildingQty < n) {
+            for (let i = 0; i < SJC_ProjectList[index].FramingInvoiceList.length;i++) {
+                for (let j = SJC_ProjectList[index].BuildingQty; j < n; j++) {
+                    SJC_ProjectList[index].FramingInvoiceList[i].Buildings.push(new PairList());
+                    SJC_ProjectList[index].FramingInvoiceList[i].ToBeInvoiced.push(new PairList());
+                    for (let k = 0; k < SJC_ProjectList[index].FramingTitles.length; k++) {
+                        SJC_ProjectList[index].FramingInvoiceList[i].Buildings[j].Pairs.push(new PairDetails());
+                        SJC_ProjectList[index].FramingInvoiceList[i].Buildings[j].Pairs[k].Title = SJC_ProjectList[index].FramingTitles[k];
+                        SJC_ProjectList[index].FramingInvoiceList[i].ToBeInvoiced[j].Pairs.push(new PairDetails());
+                        SJC_ProjectList[index].FramingInvoiceList[i].ToBeInvoiced[j].Pairs[k].Title = SJC_ProjectList[index].FramingTitles[k];
+                    }
+                }
+                for (let j = SJC_ProjectList[index].BuildingQty; j < n; j++) {
+                    SJC_ProjectList[index].FormingInvoiceList[i].Buildings.Pairs.push(new PairDetails());
+                    SJC_ProjectList[index].FormingInvoiceList[i].Buildings.Pairs[j].Title = "Building " + (j + 1).toString();
+                    SJC_ProjectList[index].FormingInvoiceList[i].ToBeInvoiced.Pairs.push(new PairDetails());
+                    SJC_ProjectList[index].FormingInvoiceList[i].ToBeInvoiced.Pairs[j].Title = "Building " + (j + 1).toString();
+                }
+            }
+        }
+        SJC_ProjectList[index].BuildingQty = n;
         SJC_ProjectList[index].FramingContractNo = framingContractNo.value;
         SJC_ProjectList[index].FormingContractNo = formingContractNo.value;
         UpdateDB(SJC_ProjectList[index]);

@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson;
+using SJC_Portal.Data.Project_Classes;
 
 namespace SJC_Portal.Data
 {
@@ -14,6 +15,8 @@ namespace SJC_Portal.Data
         public bool? PercentBase { get; set; }
         public string? FramingContractNo { get; set; }
         public string? FormingContractNo { get; set; }
-        public IEnumerable<Invoice>? InvoiceList { get; set; }
+        public IEnumerable<string>? FramingTitles { get; set; }
+        public IEnumerable<FramingInvoice>? FramingInvoiceList { get; set; }
+        public IEnumerable<FormingInvoice>? FormingInvoiceList { get; set; }
     }
 }

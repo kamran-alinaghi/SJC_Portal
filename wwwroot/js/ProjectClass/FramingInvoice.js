@@ -1,5 +1,5 @@
-﻿import { BuildingDetails } from "./BuildingDetails.js";
-export class Invoice {
+﻿import { PairList } from "./PairDetails.js";
+export class FramingInvoice {
     InvoiceNumber;
     InvoiceDate;
     Buildings;
@@ -8,11 +8,12 @@ export class Invoice {
     CraneCharge;
 
     constructor() {
-        this.InvoiceNumber = "";
+        this.InvoiceNumber = 0;
         this.InvoiceDate = "";
-        this.Buildings = [new BuildingDetails()];
+        this.Buildings = [new PairList()];
         this.Buildings.pop();
-        this.ToBeInvoiced = new BuildingDetails();
+        this.ToBeInvoiced = [new PairList()];
+        this.ToBeInvoiced.pop();
         this.InvoiceCharge = 0;
         this.CraneCharge = 0;
     }

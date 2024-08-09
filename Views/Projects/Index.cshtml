@@ -7,31 +7,35 @@
 </head>
 <div id="main-container" class="one-column">
     <div class="three-column fixed-container">
-        <div class="center-element-horizental" style="margin-top:50px;">
-            <h1>Projects</h1>
+        <div class="two-column center-element-horizental" style="margin-top:60px;">
+            <span id="project-name-holder" class="project-title">Projects</span>
+            <div>
+                <span id="invoice-number-holder" class="project-title" style="float:right;margin-left:30px;">Invoice #12 (12-08-2024)</span>
+            </div>
+            
         </div>
         <div class="two-column center-element-horizental">
-            <button class="main-button main-button-margin main-button-width">Summary</button>
+            <button id="invoce-summary-btn" class="main-button main-button-margin main-button-width">Summary</button>
             <div>
-                <button class="main-button main-button-margin main-button-width" style="float:right">Save</button>
+                <button id="invoce-save-btn" class="main-button main-button-margin main-button-width" style="float:right">Save</button>
             </div>
-            <button class="main-button main-button-margin main-button-width">Add</button>
+            <button id="add-invoice-btn" class="main-button main-button-margin main-button-width">Add</button>
             <div>
-                <button class="main-button main-button-margin main-button-width" style="float:right">Remove</button>
+                <button id="remove-invoice-btn" class="main-button main-button-margin main-button-width" style="float:right">Remove</button>
             </div>
         </div>
     </div>
     
     <div class="three-column">
         <div class="side-bars-left">
-            <button type="button" class="control-button left-control-button center-element-horizental"></button>
+            <button id="left-btn" type="button" class="control-button left-control-button center-element-horizental"></button>
         </div>
         <div id="root" class="width-scroll center-element-horizental">
         </div>
         <div class="side-bars-right">
-            <button type="button" class="control-button right-control-button center-element-horizental"></button>
+            <button id="right-btn" type="button" class="control-button right-control-button center-element-horizental"></button>
         </div>
     </div>
 </div>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script type="module" src="/js/ProjectsPage.js"></script>

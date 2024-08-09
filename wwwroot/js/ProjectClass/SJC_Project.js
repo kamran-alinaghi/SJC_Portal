@@ -1,4 +1,5 @@
-﻿import { Invoice } from "./Invoice.js";
+﻿import { FramingInvoice } from "./FramingInvoice.js";
+import { FormingInvoice } from "./FormingInvoice.js";
 export class SJC_Project {
     _id;
     Title;
@@ -10,7 +11,9 @@ export class SJC_Project {
     PercentBase;
     FramingContractNo;
     FormingContractNo;
-    InvoiceList;
+    FramingTitles;
+    FramingInvoiceList;
+    FormingInvoiceList;
 
     constructor() {
         this._id = "";
@@ -23,7 +26,11 @@ export class SJC_Project {
         this.PercentBase = false;
         this.FramingContractNo = "";
         this.FormingContractNo = "";
-        this.InvoiceList = [new Invoice()];
-        this.InvoiceList.pop();
+        this.FramingTitles = [""];
+        this.FramingTitles.pop();
+        this.FramingInvoiceList = [new FramingInvoice()];
+        this.FramingInvoiceList.pop();
+        this.FormingInvoiceList = [new FormingInvoice()];
+        this.FormingInvoiceList.pop();
     }
 }
