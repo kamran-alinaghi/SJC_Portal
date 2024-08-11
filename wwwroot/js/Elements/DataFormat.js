@@ -22,13 +22,21 @@
 }
 
 export class TableDataSet {
+    Id;
     Column;
     Row;
-    constructor() {
+    ColumnType;
+    ColumnEditable;
+    constructor(id = 0) {
         this.Column = [{ Row: [] }];
         this.Row = [{ Column: [] }];
         this.Column.pop();
         this.Row.pop();
+        this.Id = id;
+        this.ColumnType = [""];
+        this.ColumnType.pop();
+        this.ColumnEditable = [true];
+        this.ColumnEditable.pop();
     }
 
     /**

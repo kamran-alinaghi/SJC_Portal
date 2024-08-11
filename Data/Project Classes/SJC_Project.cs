@@ -16,6 +16,7 @@ namespace SJC_Portal.Data
         public string? FramingContractNo { get; set; }
         public string? FormingContractNo { get; set; }
         public IEnumerable<string>? FramingTitles { get; set; }
+        public IEnumerable<string>? FormingTitles { get; set; }
         public IEnumerable<FramingInvoice>? FramingInvoiceList { get; set; }
         public IEnumerable<FormingInvoice>? FormingInvoiceList { get; set; }
     }

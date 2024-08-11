@@ -2,12 +2,17 @@
 
 export class Input extends BaseElement {
     Type;
-    constructor() {
+    isPercent;
+    constructor(type="text") {
         super();
-        this.Type = "";
+        this.Type = type;
     }
 
     ToHtmlObject(content = "") {
-        return '<input type="text" value="' + content+'">';
+        let res = "";
+        res = '<input ';
+        if (this.Id.length > 0) { res += 'id="' + this.Id + '" '; }
+        res += 'type="text" min="0" value="' + content + '"/>';
+        return res;
     }
 }

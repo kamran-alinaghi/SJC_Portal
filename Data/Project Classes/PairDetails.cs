@@ -4,6 +4,8 @@
     {
         public string? Title { get; set; }
         public double? Value { get; set; }
+        public double? Percent {  get; set; }
+        public double? SecondValue { get; set; }
     }
 
     public class PairList

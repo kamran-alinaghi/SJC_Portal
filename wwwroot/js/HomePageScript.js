@@ -204,7 +204,7 @@ function OpenProjectDetails(_idStr) {
     contractDateInput.value = tempProject.ContractDate;
     totalBudgetInput.value = tempProject.TotalBudget;
     framingBudgetInput.value = tempProject.FramingBudget;
-    buildingQtyInput.value = tempProject.BuildingQty;
+    buildingQtyInput.value = tempProject.BuildingQty < 1 ? 1 : tempProject.BuildingQty;
     framingContractNo.value = tempProject.FramingContractNo;
     formingContractNo.value = tempProject.FormingContractNo;
 
@@ -239,12 +239,14 @@ function SaveProjectDetails() {
                 res.FramingInvoiceList[0].ToBeInvoiced[i].Pairs[j].Title = res.FramingTitles[j];
             }
         }
+        for (let i = 0; i < res.BuildingQty; i++) { res.FormingTitles.push("Building " + (i + 1).toString()); }
+        
         res.FormingInvoiceList.push(new FormingInvoice());
         for (let i = 0; i < res.BuildingQty; i++) {
             res.FormingInvoiceList[0].Buildings.Pairs.push(new PairDetails());
-            res.FormingInvoiceList[0].Buildings.Pairs[i].Title = "Building " + (i + 1).toString();
+            res.FormingInvoiceList[0].Buildings.Pairs[i].Title = res.FormingTitles[i];
             res.FormingInvoiceList[0].ToBeInvoiced.Pairs.push(new PairDetails());
-            res.FormingInvoiceList[0].ToBeInvoiced.Pairs[i].Title = "Building " + (i + 1).toString();
+            res.FormingInvoiceList[0].ToBeInvoiced.Pairs[i].Title = res.FormingTitles[i];
         }
 
         res.FramingContractNo = framingContractNo.value;
@@ -271,10 +273,14 @@ function SaveProjectDetails() {
                     SJC_ProjectList[index].FormingInvoiceList[i].Buildings.Pairs.splice(n, (SJC_ProjectList[index].BuildingQty - n));
                     SJC_ProjectList[index].FormingInvoiceList[i].ToBeInvoiced.Pairs.splice(n, (SJC_ProjectList[index].BuildingQty - n));
                 }
+                SJC_ProjectList[index].FormingTitles.splice(n, (SJC_ProjectList[index].BuildingQty - n));
             }
         }
         else if (SJC_ProjectList[index].BuildingQty < n) {
-            for (let i = 0; i < SJC_ProjectList[index].FramingInvoiceList.length;i++) {
+            for (let i = SJC_ProjectList[index].FormingTitles.length; i < n; i++) {
+                SJC_ProjectList[index].FormingTitles.push("Building " + (i + 1).toString());
+            }
+            for (let i = 0; i < SJC_ProjectList[index].FramingInvoiceList.length; i++) {
                 for (let j = SJC_ProjectList[index].BuildingQty; j < n; j++) {
                     SJC_ProjectList[index].FramingInvoiceList[i].Buildings.push(new PairList());
                     SJC_ProjectList[index].FramingInvoiceList[i].ToBeInvoiced.push(new PairList());
@@ -285,14 +291,16 @@ function SaveProjectDetails() {
                         SJC_ProjectList[index].FramingInvoiceList[i].ToBeInvoiced[j].Pairs[k].Title = SJC_ProjectList[index].FramingTitles[k];
                     }
                 }
+                
                 for (let j = SJC_ProjectList[index].BuildingQty; j < n; j++) {
                     SJC_ProjectList[index].FormingInvoiceList[i].Buildings.Pairs.push(new PairDetails());
-                    SJC_ProjectList[index].FormingInvoiceList[i].Buildings.Pairs[j].Title = "Building " + (j + 1).toString();
+                    SJC_ProjectList[index].FormingInvoiceList[i].Buildings.Pairs[j].Title = SJC_ProjectList[index].FormingTitles[j];
                     SJC_ProjectList[index].FormingInvoiceList[i].ToBeInvoiced.Pairs.push(new PairDetails());
-                    SJC_ProjectList[index].FormingInvoiceList[i].ToBeInvoiced.Pairs[j].Title = "Building " + (j + 1).toString();
+                    SJC_ProjectList[index].FormingInvoiceList[i].ToBeInvoiced.Pairs[j].Title = SJC_ProjectList[index].FormingTitles[j];
                 }
             }
         }
+        
         SJC_ProjectList[index].BuildingQty = n;
         SJC_ProjectList[index].FramingContractNo = framingContractNo.value;
         SJC_ProjectList[index].FormingContractNo = formingContractNo.value;

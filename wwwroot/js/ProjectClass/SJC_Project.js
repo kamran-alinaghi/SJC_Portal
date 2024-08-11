@@ -28,6 +28,8 @@ export class SJC_Project {
         this.FormingContractNo = "";
         this.FramingTitles = [""];
         this.FramingTitles.pop();
+        this.FormingTitles = [""];
+        this.FormingTitles.pop();
         this.FramingInvoiceList = [new FramingInvoice()];
         this.FramingInvoiceList.pop();
         this.FormingInvoiceList = [new FormingInvoice()];

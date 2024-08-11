@@ -71,15 +71,23 @@
 .styled-table th:last-child,.styled-table td:last-child {border-right: none;}
 .styled-table input{
     border: none;
-    padding: 10px;
+    padding: 10px 0px;
     outline: none;
+    width:Calc(100% - 20px);
     background-color: inherit; 
-    width:5vw;
-    min-width:70px;
+}
+.styled-div{
+    padding: 10px 10px;
+    width:100%;
+    background-color: inherit; 
 }
 .styled-table input:focus{background-color: #a0d2fa;}
-.scrollable{
-    overflow-y:auto;
+
+.span-width {
+    width: 100%;
+}
+.scrollable {
+    overflow-y: auto;
 }
 .width-scroll{
     overflow-x:auto;

@@ -61,6 +61,8 @@ namespace SJC_Portal.Controllers
                     .Set(p => p.TotalBudget, param.TotalBudget)
                     .Set(p => p.FramingBudget, param.FramingBudget)
                     .Set(p => p.BuildingQty, param.BuildingQty)
+                    .Set(p => p.FramingTitles, param.FramingTitles)
+                    .Set(p => p.FormingTitles, param.FormingTitles)
                     .Set(p => p.FramingContractNo, param.FramingContractNo)
                     .Set(p => p.FormingContractNo, param.FormingContractNo)
                     .Set(p => p.FramingInvoiceList, param.FramingInvoiceList)
@@ -140,7 +142,8 @@ namespace SJC_Portal.Controllers
             UpdateDefinition<SJC_Project> update = Builders<SJC_Project>.Update
                 .Set(p => p.FramingInvoiceList, param.FramingInvoiceList)
                 .Set(p => p.FormingInvoiceList, param.FormingInvoiceList)
-                .Set(p => p.FramingTitles, param.FramingTitles);
+                .Set(p => p.FramingTitles, param.FramingTitles)
+                .Set(p => p.FormingTitles, param.FormingTitles);
             collection.UpdateOne(filter, update);
         }
 
