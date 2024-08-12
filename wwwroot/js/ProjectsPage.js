@@ -53,6 +53,7 @@ function GetInvoiceList() {
         function (data, status) {
             if (status == "success") {
                 selectedProject = JSON.parse(data);
+                currentPageIndex = GetCurrentPageIndex();
                 InitializePage();
             }
         });
@@ -70,8 +71,6 @@ function UpdateProjectInvoices(proj) {
 //functions
 
 function InitializePage() {
-    //ValidateProjectData();
-    currentPageIndex = GetCurrentPageIndex();
     ShowProjectDetailsOnPage();
     DrawTable();
     FormIdList();
@@ -140,11 +139,12 @@ function DrawTable() {
         DrawInitialValuesTable();
     }
     else {
-
+        DrawInvoices();
     }
 }
 
 function FormIdList() {
+    idList.length = 0;
     for (let i = 0; i < tableData.length; i++) {
         for (let j = 0; j < tableData[i].Row.length - 1; j++) {
             for (let k = 0; k < tableData[i].Row[j].Column.length; k++) {
@@ -168,12 +168,30 @@ function CorrectFormatting() {
 function AddEvents() {
     for (let i = 0; i < idList.length; i++) {
         const el = document.getElementById(idList[i]);
-        if (currentPageIndex == 0) { el.onchange = function (e) { return ChangeEachCell(e.target, 1, 2); }; }
+        if (currentPageIndex == 0) { el.onchange = function (e) { return ChangeEachCellInitialValues(e.target, 1, 2); }; }
         else {
-
+            el.onchange = function (e) { return ChangeEachCell(e.target); }
         }
     }
     saveBtn.onclick = function () { return UpdateProjectInvoices(selectedProject); };
+    addBtn.onclick = function () { return AddInvoice(); };
+    leftBtn.onclick = function () {
+        if (currentPageIndex > 0) {
+            currentPageIndex--;
+            InitializePage();
+        }
+    };
+
+    rightBtn.onclick = function () {
+        if (TableType=="Framing" && currentPageIndex < selectedProject.FramingInvoiceList.length - 1) {
+            currentPageIndex++;
+            InitializePage();
+        }
+        else if(TableType == "Forming" && currentPageIndex < selectedProject.FormingInvoiceList.length - 1){
+            currentPageIndex++;
+            InitializePage();
+        }
+    }
 }
 
 
@@ -185,6 +203,7 @@ function AddEvents() {
 
 
 function DrawInitialValuesTable() {
+    tableData.length = 0;
     if (TableType == "Framing") {
         for (let i = 0; i < selectedProject.FramingInvoiceList[0].Buildings.length; i++) {
             tableData.push(new DataFormat.TableDataSet(i));
@@ -199,7 +218,7 @@ function DrawInitialValuesTable() {
                 tableData[i].AddRow(rowToAdd);
             }
             tableData[i].ColumnType = ["text", "percent", "price", "price"];
-            tableData[i].ColumnEditable = [true, true, true, false];
+            tableData[i].ColumnEditable = [true, true, true, true];
         }
     }
     else {
@@ -216,12 +235,73 @@ function DrawInitialValuesTable() {
         tableData[0].ColumnType = ["text", "percent", "price", "price"];
         tableData[0].ColumnEditable = [true, true, true, true];
     }
+    elem.length = 0;
     for (let i = 0; i < tableData.length; i++) {
         elem.push(new Table("", tableData[i]));
     }
     root.innerHTML = "";
     for (let i = 0; i < elem.length; i++) {
         root.innerHTML += elem[i].ToHtmlObject();
+    }
+}
+
+function DrawInvoices() {
+    tableData.length = 0;
+    if (currentPageIndex > 1) {
+        if (TableType == "Framing") {
+
+        }
+        else {
+
+        }
+    }
+    else {
+        if (TableType == "Framing") {
+            for (let i = 0; i < selectedProject.FramingInvoiceList[1].Buildings.length; i++) {
+                tableData.push(new DataFormat.TableDataSet(i));
+                tableData[i].AddRow([selectedProject.FormingTitles[i], "% of total budget", "% on this invoice", "Amount", "10% Holdback", "GST", "Invoice"]);
+                for (let j = 0; j < selectedProject.FramingInvoiceList[1].Buildings[i].Pairs.length; j++) {
+                    let val = selectedProject.FramingInvoiceList[0].Buildings[i].Pairs[j].Value * selectedProject.FramingInvoiceList[1].Buildings[i].Pairs[j].Percent / 100;
+                    tableData[i].AddRow([
+                        selectedProject.FramingInvoiceList[1].Buildings[i].Pairs[j].Title,
+                        val * 100 / selectedProject.FramingBudget,
+                        selectedProject.FramingInvoiceList[1].Buildings[i].Pairs[j].Percent,
+                        val,
+                        val * 0.1,
+                        val * 0.045, // 0.9 * 0.05
+                        val * 0.945
+                    ]);
+                }
+                tableData[i].ColumnType = ["text", "percent", "percent", "price", "price", "price", "price"];
+                tableData[i].ColumnEditable = [true, false, true, false, false, false, false];
+            }
+        }
+        else {
+            tableData.push(new DataFormat.TableDataSet(0));
+            tableData[0].AddRow(["Foundation Completion", "% of total budget", "% on this invoice", "Amount", "10% Holdback", "GST", "Invoice"]);
+            for (let i = 0; i < selectedProject.FormingInvoiceList[1].Buildings.Pairs.length; i++) {
+                let val = selectedProject.FormingInvoiceList[0].Buildings.Pairs[i].Value * selectedProject.FormingInvoiceList[1].Buildings.Pairs[i].Percent / 100;
+                tableData[0].AddRow([
+                    selectedProject.FormingInvoiceList[1].Buildings.Pairs[i].Title,
+                    val * 100 / selectedProject.FramingBudget,
+                    selectedProject.FormingInvoiceList[1].Buildings.Pairs[i].Percent,
+                    val,
+                    val * 0.1,
+                    val * 0.045, // 0.9 * 0.05
+                    val * 0.945
+                ]);
+            }
+            tableData[0].ColumnType = ["text", "percent", "percent", "price", "price", "price", "price"];
+            tableData[0].ColumnEditable = [true, false, true, false, false, false, false];
+        }
+        elem.length = 0;
+        for (let i = 0; i < tableData.length; i++) {
+            elem.push(new Table("", tableData[i]));
+        }
+        root.innerHTML = "";
+        for (let i = 0; i < elem.length; i++) {
+            root.innerHTML += elem[i].ToHtmlObject();
+        }
     }
 }
 
@@ -232,7 +312,7 @@ function DrawInitialValuesTable() {
  * @param {number} price
  * @param {number[]} otherColumns
  */
-function ChangeEachCell(element, percentColumnIndex, priceColumnIndex) {
+function ChangeEachCellInitialValues(element, percentColumnIndex, priceColumnIndex) {
     const b = GetIndexFromString(element.id, "b");
     const r = GetIndexFromString(element.id, "r");
     const c = GetIndexFromString(element.id, "c");
@@ -263,6 +343,46 @@ function ChangeEachCell(element, percentColumnIndex, priceColumnIndex) {
         selectedProject.FormingTitles[r] = element.value;
     }
 }
+
+function ChangeEachCell(element) {
+    const b = GetIndexFromString(element.id, "b");
+    const r = GetIndexFromString(element.id, "r");
+    const c = GetIndexFromString(element.id, "c");
+    let midValue;
+    if (tableData[b].ColumnType[c] == "text") {
+        midValue = element.value;
+    }
+    else {
+        midValue = parseFloat(element.value);
+        if (isNaN(midValue)) { midValue = 0; }
+    }
+    const tableLength = tableData[0].Row[0].Column.length;
+    if (c == tableLength - 5) {
+        const val = (midValue * selectedProject.FramingInvoiceList[0].Buildings[b].Pairs[r].Value / 100);
+        SetValueOfCell(b, r, tableLength - 4, val, true);
+        SetValueOfCell(b, r, tableLength - 5, midValue, true);
+
+        SetValueOfCell(b, r, tableLength - 3, (val * 0.1), true);
+        SetValueOfCell(b, r, tableLength - 2, (val * 0.045), true);
+        SetValueOfCell(b, r, tableLength - 1, (val * 0.945), true);
+    }
+    else if (c == tableLength - 4) {
+        SetValueOfCell(b, r, tableLength - 5, (100 * midValue / selectedProject.FramingBudget), true);
+        SetValueOfCell(b, r, tableLength - 4, midValue, true);
+
+        SetValueOfCell(b, r, tableLength - 3, (midValue * 0.1), true);
+        SetValueOfCell(b, r, tableLength - 2, (midValue * 0.045), true);
+        SetValueOfCell(b, r, tableLength - 1, (midValue * 0.945), true);
+    }
+    else {
+        SetValueOfCell(b, r, c, midValue, true);
+    }
+
+    if (TableType == "Forming" && c == 0) {
+        selectedProject.FormingTitles[r] = element.value;
+    }
+}
+
 /**
  * 
  * @param {string} str
@@ -309,10 +429,30 @@ function EditProjectDetails(buildingIndex, rowIndex, columnIndex, value) {
                     break;
             }
         }
-        else {
-
+        else if (currentPageIndex == 1) {
+            switch (columnIndex) {
+                case 0:
+                    selectedProject.FramingInvoiceList[1].Buildings[buildingIndex].Pairs[rowIndex].Title = value;
+                    break;
+                case 2:
+                    selectedProject.FramingInvoiceList[1].Buildings[buildingIndex].Pairs[rowIndex].Percent = value;
+                    break;
+                default:
+                    break;
+            }
         }
-
+        else {
+            switch (columnIndex) {
+                case 0:
+                    selectedProject.FramingInvoiceList[currentPageIndex].Buildings[buildingIndex].Pairs[rowIndex].Title = value;
+                    break;
+                case 3:
+                    selectedProject.FramingInvoiceList[currentPageIndex].Buildings[buildingIndex].Pairs[rowIndex].Percent = value;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
     else {
         if (currentPageIndex == 0) {
@@ -331,8 +471,29 @@ function EditProjectDetails(buildingIndex, rowIndex, columnIndex, value) {
                     break;
             }
         }
+        else if (currentPageIndex == 1) {
+            switch (columnIndex) {
+                case 0:
+                    selectedProject.FormingInvoiceList[1].Buildings.Pairs[rowIndex].Title = value;
+                    break;
+                case 2:
+                    selectedProject.FormingInvoiceList[1].Buildings.Pairs[rowIndex].Percent = value;
+                    break;
+                default:
+                    break;
+            }
+        }
         else {
-
+            switch (columnIndex) {
+                case 0:
+                    selectedProject.FormingInvoiceList[currentPageIndex].Buildings.Pairs[rowIndex].Title = value;
+                    break;
+                case 3:
+                    selectedProject.FormingInvoiceList[currentPageIndex].Buildings.Pairs[rowIndex].Percent = value;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
@@ -370,4 +531,33 @@ function SetValueOfCell(tableIndex, rowIndex, columnIndex, value, shouldSave = f
     }
 }
 
+function AddInvoice() {
+    let index = 0;
+    if (TableType == "Framing") {
+        selectedProject.FramingInvoiceList.push(new FramingInvoice());
+        index = selectedProject.FramingInvoiceList.length - 1;
+        for (let i = 0; i < selectedProject.BuildingQty; i++) {
+            selectedProject.FramingInvoiceList[index].Buildings.push(new PairList());
+            selectedProject.FramingInvoiceList[index].ToBeInvoiced.push(new PairList());
+            for (let j = 0; j < selectedProject.FramingTitles.length; j++) {
+                selectedProject.FramingInvoiceList[index].Buildings[i].Pairs.push(new PairDetails());
+                selectedProject.FramingInvoiceList[index].Buildings[i].Pairs[j].Title = selectedProject.FramingTitles[j];
+                selectedProject.FramingInvoiceList[index].ToBeInvoiced[i].Pairs.push(new PairDetails());
+                selectedProject.FramingInvoiceList[index].ToBeInvoiced[i].Pairs[j].Title = selectedProject.FramingTitles[j];
+            }
+        }
+    }
+    else {
+        selectedProject.FormingInvoiceList.push(new FormingInvoice());
+        index = selectedProject.FormingInvoiceList.length - 1;
+        for (let i = 0; i < selectedProject.BuildingQty; i++) {
+            selectedProject.FormingInvoiceList[index].Buildings.Pairs.push(new PairDetails());
+            selectedProject.FormingInvoiceList[index].Buildings.Pairs[i].Title = selectedProject.FormingTitles[i];
+            selectedProject.FormingInvoiceList[index].ToBeInvoiced.Pairs.push(new PairDetails());
+            selectedProject.FormingInvoiceList[index].ToBeInvoiced.Pairs[i].Title = selectedProject.FormingTitles[i];
+        }
+    }
+    currentPageIndex = GetCurrentPageIndex();
+    InitializePage();
+}
 
