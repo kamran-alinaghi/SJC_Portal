@@ -210,7 +210,7 @@ function DrawInitialValuesTable() {
             tableData[i].AddRow([selectedProject.FormingTitles[i], "% of total budget", "SJC Subtotal", "Sub Contract Total"]);
             for (let j = 0; j < selectedProject.FramingInvoiceList[0].Buildings[i].Pairs.length; j++) {
                 const rowToAdd = [
-                    selectedProject.FramingInvoiceList[0].Buildings[i].Pairs[j].Title,
+                    selectedProject.FramingTitles[j],
                     selectedProject.FramingInvoiceList[0].Buildings[i].Pairs[j].Percent,
                     selectedProject.FramingInvoiceList[0].Buildings[i].Pairs[j].Value,
                     selectedProject.FramingInvoiceList[0].Buildings[i].Pairs[j].SecondValue
@@ -226,7 +226,7 @@ function DrawInitialValuesTable() {
         tableData[0].AddRow(["Foundation Completion", "% of total budget", "SJC Subtotal", "Sub Contract Total"]);
         for (let i = 0; i < selectedProject.FormingInvoiceList[0].Buildings.Pairs.length; i++) {
             tableData[0].AddRow([
-                selectedProject.FormingInvoiceList[0].Buildings.Pairs[i].Title,
+                selectedProject.FormingTitles[i],
                 selectedProject.FormingInvoiceList[0].Buildings.Pairs[i].Percent,
                 selectedProject.FormingInvoiceList[0].Buildings.Pairs[i].Value,
                 selectedProject.FormingInvoiceList[0].Buildings.Pairs[i].SecondValue
@@ -259,7 +259,7 @@ function DrawInvoices() {
                         prevVal += parseFloat(selectedProject.FramingInvoiceList[k].Buildings[i].Pairs[j].Percent);
                     }
                     tableData[i].AddRow([
-                        selectedProject.FramingInvoiceList[currentPageIndex].Buildings[i].Pairs[j].Title,
+                        selectedProject.FramingTitles[j],
                         val * 100 / selectedProject.FramingBudget,
                         prevVal,
                         selectedProject.FramingInvoiceList[currentPageIndex].Buildings[i].Pairs[j].Percent,
@@ -283,7 +283,7 @@ function DrawInvoices() {
                     prevVal += parseFloat(selectedProject.FormingInvoiceList[k].Buildings.Pairs[i].Percent);
                 }
                 tableData[0].AddRow([
-                    selectedProject.FormingInvoiceList[currentPageIndex].Buildings.Pairs[i].Title,
+                    selectedProject.FormingTitles[i],
                     val * 100 / selectedProject.FramingBudget,
                     prevVal,
                     selectedProject.FormingInvoiceList[currentPageIndex].Buildings.Pairs[i].Percent,
@@ -305,7 +305,7 @@ function DrawInvoices() {
                 for (let j = 0; j < selectedProject.FramingInvoiceList[1].Buildings[i].Pairs.length; j++) {
                     let val = selectedProject.FramingInvoiceList[0].Buildings[i].Pairs[j].Value * selectedProject.FramingInvoiceList[1].Buildings[i].Pairs[j].Percent / 100;
                     tableData[i].AddRow([
-                        selectedProject.FramingInvoiceList[1].Buildings[i].Pairs[j].Title,
+                        selectedProject.FramingTitles[j],
                         val * 100 / selectedProject.FramingBudget,
                         selectedProject.FramingInvoiceList[1].Buildings[i].Pairs[j].Percent,
                         val,
@@ -324,7 +324,7 @@ function DrawInvoices() {
             for (let i = 0; i < selectedProject.FormingInvoiceList[1].Buildings.Pairs.length; i++) {
                 let val = selectedProject.FormingInvoiceList[0].Buildings.Pairs[i].Value * selectedProject.FormingInvoiceList[1].Buildings.Pairs[i].Percent / 100;
                 tableData[0].AddRow([
-                    selectedProject.FormingInvoiceList[1].Buildings.Pairs[i].Title,
+                    selectedProject.FormingTitles[i],
                     val * 100 / selectedProject.FramingBudget,
                     selectedProject.FormingInvoiceList[1].Buildings.Pairs[i].Percent,
                     val,
@@ -424,6 +424,10 @@ function ChangeEachCell(element) {
 
     if (TableType == "Forming" && c == 0) {
         selectedProject.FormingTitles[r] = element.value;
+    }
+
+    if (TableType == "Framing" && c == 0) {
+        selectedProject.FramingTitles[r] = element.value;
     }
 }
 
