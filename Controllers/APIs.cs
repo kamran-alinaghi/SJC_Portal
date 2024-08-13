@@ -119,10 +119,11 @@ namespace SJC_Portal.Controllers
         }
 
         [HttpPost]
-        public string GetTableName()
+        public string? GetTableName()
         {
             TableNameParam? param = TableNameInSession(GetSetAction.Get, null);
-            return param.Name;
+            if (param != null && param.Name.Length > 0) { return param.Name; }
+            else { return null; }
         }
 
         [HttpPost]
@@ -216,25 +217,31 @@ namespace SJC_Portal.Controllers
         private TableNameParam? TableNameInSession(GetSetAction act, TableNameParam? p)
         {
             TableNameParam? res = new TableNameParam();
-            switch (act)
+            if (_contex.HttpContext != null)
             {
-                case GetSetAction.Set:
-                    if (p != null)
-                    {
-                        _contex.HttpContext.Session.SetString("tableName", p.Name);
-                        _contex.HttpContext.Session.SetString("projectId", Newtonsoft.Json.JsonConvert.SerializeObject(p._id));
-                    }
-                    res = null;
-                    break;
-                case GetSetAction.Get:
-                    res.Name = _contex.HttpContext.Session.GetString("tableName");
-                    res._id = BsonSerializer.Deserialize<ObjectId>(_contex.HttpContext.Session.GetString("projectId"));
-                    break;
-                default:
-                    res = null;
-                    break;
+                switch (act)
+                {
+                    case GetSetAction.Set:
+                        if (p!=null && p.Name != null)
+                        {
+                            _contex.HttpContext.Session.SetString("tableName", p.Name);
+                            _contex.HttpContext.Session.SetString("projectId", Newtonsoft.Json.JsonConvert.SerializeObject(p._id));
+                        }
+                        res = null;
+                        break;
+                    case GetSetAction.Get:
+                        res.Name = _contex.HttpContext.Session.GetString("tableName");
+                        string? tempstr = _contex.HttpContext.Session.GetString("projectId");
+                        if(tempstr!=null && tempstr.Length > 0) { res._id = BsonSerializer.Deserialize<ObjectId>(_contex.HttpContext.Session.GetString("projectId")); }
+                        else { res=null; }
+                        break;
+                    default:
+                        res = null;
+                        break;
+                }
+                return res;
             }
-            return res;
+            else { return null; }
         }
     }
 }

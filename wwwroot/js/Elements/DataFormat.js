@@ -27,6 +27,7 @@ export class TableDataSet {
     Row;
     ColumnType;
     ColumnEditable;
+    LastRow;
     constructor(id = 0) {
         this.Column = [{ Row: [] }];
         this.Row = [{ Column: [] }];
@@ -37,6 +38,8 @@ export class TableDataSet {
         this.ColumnType.pop();
         this.ColumnEditable = [true];
         this.ColumnEditable.pop();
+        this.LastRow = { Column: [] };
+        this.LastRow.Column.pop();
     }
 
     /**
@@ -84,6 +87,14 @@ export class TableDataSet {
             return true;
         }
         return false;
+    }
+
+    /**
+     * 
+     * @param {any[]} dataList
+     */
+    AddLastRow(dataList) {
+        this.LastRow.Column = dataList;
     }
 }
 

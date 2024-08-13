@@ -42,8 +42,12 @@ function GetTableName() {
     $.post("/apis/GetTableName", "",
         function (data, status) {
             if (status == "success") {
+
                 TableType = data;
                 GetInvoiceList();
+            }
+            else {
+                window.location.href = "/user/login";
             }
         });
 }
@@ -162,6 +166,9 @@ function CorrectFormatting() {
                 SetValueOfCell(i, j, k, tableData[i].Row[j + 1].Column[k], false);
             }
         }
+        for (let h = 0; h < tableData[i].LastRow.Column.length; h++) {
+            SetValueOfCell(i, tableData[i].Row.length - 1, h, tableData[i].LastRow.Column[h], false);
+        }
     }
 }
 
@@ -269,6 +276,17 @@ function DrawInvoices() {
                         val * 0.945
                     ]);
                 }
+                let sumValue = GetSumValue(currentPageIndex, i);
+                tableData[i].AddLastRow([
+                    "Sum",
+                    " ",
+                    " ",
+                    " ",
+                    sumValue,
+                    sumValue * 0.1,
+                    sumValue * 0.045, // 0.9 * 0.05
+                    sumValue * 0.945
+                ]);
                 tableData[i].ColumnType = ["text", "percent", "percent", "percent", "price", "price", "price", "price"];
                 tableData[i].ColumnEditable = [true, false, false, true, false, false, false, false];
             }
@@ -293,6 +311,17 @@ function DrawInvoices() {
                     val * 0.945
                 ]);
             }
+            let sumValue = GetSumValue(currentPageIndex, 0);
+            tableData[0].AddLastRow([
+                "Sum",
+                " ",
+                " ",
+                " ",
+                sumValue,
+                sumValue * 0.1,
+                sumValue * 0.045, // 0.9 * 0.05
+                sumValue * 0.945
+            ]);
             tableData[0].ColumnType = ["text", "percent", "percent", "percent", "price", "price", "price", "price"];
             tableData[0].ColumnEditable = [true, false, false, true, false, false, false, false];
         }
@@ -314,6 +343,17 @@ function DrawInvoices() {
                         val * 0.945
                     ]);
                 }
+
+                let sumValue = GetSumValue(1,i);
+                tableData[i].AddLastRow([
+                    "Sum",
+                    " ",
+                    " ",
+                    sumValue,
+                    sumValue * 0.1,
+                    sumValue * 0.045, // 0.9 * 0.05
+                    sumValue * 0.945
+                ]);
                 tableData[i].ColumnType = ["text", "percent", "percent", "price", "price", "price", "price"];
                 tableData[i].ColumnEditable = [true, false, true, false, false, false, false];
             }
@@ -333,6 +373,16 @@ function DrawInvoices() {
                     val * 0.945
                 ]);
             }
+            let sumValue = GetSumValue(1, 0);
+            tableData[0].AddLastRow([
+                "Sum",
+                " ",
+                " ",
+                sumValue,
+                sumValue * 0.1,
+                sumValue * 0.045, // 0.9 * 0.05
+                sumValue * 0.945
+            ]);
             tableData[0].ColumnType = ["text", "percent", "percent", "price", "price", "price", "price"];
             tableData[0].ColumnEditable = [true, false, true, false, false, false, false];
         }
@@ -391,6 +441,8 @@ function ChangeEachCell(element) {
     const r = GetIndexFromString(element.id, "r");
     const c = GetIndexFromString(element.id, "c");
     let midValue;
+    let refVal = 0;
+    
     if (tableData[b].ColumnType[c] == "text") {
         midValue = element.value;
     }
@@ -399,8 +451,11 @@ function ChangeEachCell(element) {
         if (isNaN(midValue)) { midValue = 0; }
     }
     const tableLength = tableData[0].Row[0].Column.length;
+    const tableRows = tableData[0].Row.length - 1;
     if (c == tableLength - 5) {
-        const val = (midValue * selectedProject.FramingInvoiceList[0].Buildings[b].Pairs[r].Value / 100);
+        if (TableType == "Framing") { refVal = selectedProject.FramingInvoiceList[0].Buildings[b].Pairs[r].Value; }
+        else { refVal = selectedProject.FormingInvoiceList[0].Buildings.Pairs[r].Value; }
+        const val = (midValue * refVal / 100);
         SetValueOfCell(b, r, tableLength - 4, val, true);
         SetValueOfCell(b, r, tableLength - 5, midValue, true);
 
@@ -408,16 +463,30 @@ function ChangeEachCell(element) {
         SetValueOfCell(b, r, tableLength - 2, (val * 0.045), true);
         SetValueOfCell(b, r, tableLength - 1, (val * 0.945), true);
         SetValueOfCell(b, r, 1, (val * 100 / selectedProject.FramingBudget), true);
-    }
-    else if (c == tableLength - 4) {
-        SetValueOfCell(b, r, tableLength - 5, (100 * midValue / selectedProject.FramingBudget), true);
-        SetValueOfCell(b, r, tableLength - 4, midValue, true);
 
-        SetValueOfCell(b, r, tableLength - 3, (midValue * 0.1), true);
-        SetValueOfCell(b, r, tableLength - 2, (midValue * 0.045), true);
-        SetValueOfCell(b, r, tableLength - 1, (midValue * 0.945), true);
-        SetValueOfCell(b, r, 1, (midValue * 100 / selectedProject.FramingBudget), true);
+        const sumVal = GetSumValue(currentPageIndex, b);
+        SetValueOfCell(b, tableRows, tableLength - 4, sumVal, false);
+        SetValueOfCell(b, tableRows, tableLength - 3, sumVal * 0.1, false);
+        SetValueOfCell(b, tableRows, tableLength - 2, sumVal * 0.045, false);
+        SetValueOfCell(b, tableRows, tableLength - 1, sumVal * 0.945, false);
     }
+    //else if (c == tableLength - 4) {
+    //    if (TableType == "Framing") { refVal = selectedProject.FramingBudget; }
+    //    else { refVal = selectedProject.TotalBudget - selectedProject.FramingBudget; }
+    //    SetValueOfCell(b, r, tableLength - 5, (100 * midValue / refVal), true);
+    //    SetValueOfCell(b, r, tableLength - 4, midValue, true);
+
+    //    SetValueOfCell(b, r, tableLength - 3, (midValue * 0.1), true);
+    //    SetValueOfCell(b, r, tableLength - 2, (midValue * 0.045), true);
+    //    SetValueOfCell(b, r, tableLength - 1, (midValue * 0.945), true);
+    //    SetValueOfCell(b, r, 1, (midValue * 100 / refVal), true);
+
+    //    const sumVal = GetSumValue(currentPageIndex, b);
+    //    SetValueOfCell(b, tableRows, tableLength - 4, sumVal, false);
+    //    SetValueOfCell(b, tableRows, tableLength - 3, sumVal * 0.1, false);
+    //    SetValueOfCell(b, tableRows, tableLength - 2, sumVal * 0.045, false);
+    //    SetValueOfCell(b, tableRows, tableLength - 1, sumVal * 0.945, false);
+    //}
     else {
         SetValueOfCell(b, r, c, midValue, true);
     }
@@ -554,28 +623,31 @@ function EditProjectDetails(buildingIndex, rowIndex, columnIndex, value) {
  */
 function SetValueOfCell(tableIndex, rowIndex, columnIndex, value, shouldSave = false) {
     const idStr = 'b' + tableIndex + '-r' + rowIndex + '-c' + columnIndex + '-';
-    let correctedValue = parseFloat(value);
-    if (isNaN(correctedValue)) { correctedValue = 0; }
-    let showValue;
-    let tosaveData;
-    switch (tableData[tableIndex].ColumnType[columnIndex]) {
-        case "price":
-            showValue = formatter.format(correctedValue);
-            tosaveData = parseFloat(correctedValue);
-            break;
-        case "percent":
-            showValue = parseFloat(correctedValue).toFixed(2).toString() + " %";
-            tosaveData = parseFloat(correctedValue).toFixed(2);
-            break;
-        default:
-            showValue = value;
-            tosaveData = value;
-            break;
-    }
-    if (tableData[tableIndex].ColumnEditable[columnIndex]) { document.getElementById(idStr).value = showValue; }
-    else { document.getElementById(idStr).innerHTML = showValue; }
-    if (shouldSave) {
-        EditProjectDetails(tableIndex, rowIndex, columnIndex, tosaveData);
+    const selectedElement = document.getElementById(idStr);
+    if (selectedElement.getAttribute("data-can-style") != "false") {
+        let correctedValue = parseFloat(value);
+        if (isNaN(correctedValue)) { correctedValue = 0; }
+        let showValue;
+        let tosaveData;
+        switch (tableData[tableIndex].ColumnType[columnIndex]) {
+            case "price":
+                showValue = formatter.format(correctedValue);
+                tosaveData = parseFloat(correctedValue);
+                break;
+            case "percent":
+                showValue = parseFloat(correctedValue).toFixed(2).toString() + " %";
+                tosaveData = parseFloat(correctedValue).toFixed(2);
+                break;
+            default:
+                showValue = value;
+                tosaveData = value;
+                break;
+        }
+        if (tableData[tableIndex].ColumnEditable[columnIndex]) { selectedElement.value = showValue; }
+        else { selectedElement.innerHTML = showValue; }
+        if (shouldSave) {
+            EditProjectDetails(tableIndex, rowIndex, columnIndex, tosaveData);
+        }
     }
 }
 
@@ -608,4 +680,28 @@ function AddInvoice() {
     currentPageIndex = GetCurrentPageIndex();
     InitializePage();
 }
+
+/**
+ * 
+ * @param {number} invoiceIndex
+ * @param {number} tableIndex
+ * @returns
+ */
+function GetSumValue(invoiceIndex, tableIndex) {
+    let res = 0;
+    if (TableType == "Framing") {
+        for (let i = 0; i < selectedProject.FramingInvoiceList[invoiceIndex].Buildings[tableIndex].Pairs.length; i++) {
+            res += selectedProject.FramingInvoiceList[invoiceIndex].Buildings[tableIndex].Pairs[i].Percent * selectedProject.FramingInvoiceList[0].Buildings[tableIndex].Pairs[i].Value / 100;
+        }
+    }
+    else {
+        for (let i = 0; i < selectedProject.FormingInvoiceList[invoiceIndex].Buildings.Pairs.length; i++) {
+            res += selectedProject.FormingInvoiceList[invoiceIndex].Buildings.Pairs[i].Percent * selectedProject.FormingInvoiceList[0].Buildings.Pairs[i].Value / 100;
+        }
+    }
+    return res;
+}
+
+
+
 
