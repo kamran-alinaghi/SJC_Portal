@@ -30,6 +30,10 @@ let SJC_ProjectList = [new SJC_Project()];
 SJC_ProjectList.pop();
 let CompeletedProjectList = [new SJC_Project()];
 CompeletedProjectList.pop();
+const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD'
+});
 
 
 //Implementations
@@ -155,6 +159,8 @@ function ImpelimentEvents() {
 
     delProject.onclick = function (e) { return DeleteProject(e.target); };
     pastProjectsButton.onclick = function (e) { return Funcs.ToggleBigBoxVisibility(e.target); }
+    totalBudgetInput.onchange = function (e) { return SetFormatting(totalBudgetInput, totalBudgetInput.value); };
+    framingBudgetInput.onchange = function (e) { return SetFormatting(framingBudgetInput, framingBudgetInput.value); };
 }
 
 
@@ -202,13 +208,25 @@ function OpenProjectDetails(_idStr) {
     if (index > -1) { tempProject = SJC_ProjectList[index]; }
     titleInput.value = tempProject.Title;
     contractDateInput.value = tempProject.ContractDate;
-    totalBudgetInput.value = tempProject.TotalBudget;
-    framingBudgetInput.value = tempProject.FramingBudget;
+    SetFormatting(totalBudgetInput, tempProject.TotalBudget);
+    //totalBudgetInput.value = tempProject.TotalBudget;
+    //framingBudgetInput.value = tempProject.FramingBudget;
+    SetFormatting(framingBudgetInput, tempProject.FramingBudget);
     buildingQtyInput.value = tempProject.BuildingQty < 1 ? 1 : tempProject.BuildingQty;
     framingContractNo.value = tempProject.FramingContractNo;
     formingContractNo.value = tempProject.FormingContractNo;
 
     projectDetailsContainer.style.visibility = "visible";
+}
+/**
+ * 
+ * @param {HTMLElement} element
+ * @param {number} value
+ */
+function SetFormatting(element, value) {
+    let tempVal = parseFloat(value);
+    if (isNaN(tempVal)) { tempVal = 0; }
+    element.value = formatter.format(tempVal);
 }
 
 function CloseProjectDetails() {
@@ -222,8 +240,8 @@ function SaveProjectDetails() {
         res._id = null;
         res.Title = titleInput.value;
         res.ContractDate = contractDateInput.value;
-        res.TotalBudget = totalBudgetInput.value;
-        res.FramingBudget = framingBudgetInput.value;
+        res.TotalBudget = CurrencyToNumber(totalBudgetInput.value);
+        res.FramingBudget = CurrencyToNumber(framingBudgetInput.value);
         res.FramingTitles = ["Basement Walls", "Main Floor", "Main Walls", "Upper Floor", "Upper Walls", "Roof", "Stairs", "Seismic", "Windows", "Backframe", "Decks", "Drops"];
         n = parseInt(buildingQtyInput.value);
         res.BuildingQty = n < 1 ? 1 : n;
@@ -240,7 +258,7 @@ function SaveProjectDetails() {
             }
         }
         for (let i = 0; i < res.BuildingQty; i++) { res.FormingTitles.push("Building " + (i + 1).toString()); }
-        
+
         res.FormingInvoiceList.push(new FormingInvoice());
         for (let i = 0; i < res.BuildingQty; i++) {
             res.FormingInvoiceList[0].Buildings.Pairs.push(new PairDetails());
@@ -258,22 +276,25 @@ function SaveProjectDetails() {
         const index = Funcs.FindIndex(SJC_ProjectList, id);
         SJC_ProjectList[index].Title = titleInput.value;
         SJC_ProjectList[index].ContractDate = contractDateInput.value;
-        SJC_ProjectList[index].TotalBudget = totalBudgetInput.value;
-        SJC_ProjectList[index].FramingBudget = framingBudgetInput.value;
+        SJC_ProjectList[index].TotalBudget = CurrencyToNumber(totalBudgetInput.value);
+        SJC_ProjectList[index].FramingBudget = CurrencyToNumber(framingBudgetInput.value);
         n = parseInt(buildingQtyInput.value);
         if (n < 1) { n = 1; }
         if (SJC_ProjectList[index].BuildingQty > n) {
             let answer = window.confirm('You may loose some data because of reduction in the "Buildings" number. Do you wish to continue?');
             if (answer) {
-                for (let i = 0; i < SJC_ProjectList[index].FramingInvoiceList.length; i++) {
-                    SJC_ProjectList[index].FramingInvoiceList[i].Buildings.splice(n, (SJC_ProjectList[index].BuildingQty - n));
-                    SJC_ProjectList[index].FramingInvoiceList[i].ToBeInvoiced.splice(n, (SJC_ProjectList[index].BuildingQty - n));
+                let answer2 = window.confirm("Are you sure about loosing those data?");
+                if (answer2) {
+                    for (let i = 0; i < SJC_ProjectList[index].FramingInvoiceList.length; i++) {
+                        SJC_ProjectList[index].FramingInvoiceList[i].Buildings.splice(n, (SJC_ProjectList[index].BuildingQty - n));
+                        SJC_ProjectList[index].FramingInvoiceList[i].ToBeInvoiced.splice(n, (SJC_ProjectList[index].BuildingQty - n));
+                    }
+                    for (let i = 0; i < SJC_ProjectList[index].FormingInvoiceList.length; i++) {
+                        SJC_ProjectList[index].FormingInvoiceList[i].Buildings.Pairs.splice(n, (SJC_ProjectList[index].BuildingQty - n));
+                        SJC_ProjectList[index].FormingInvoiceList[i].ToBeInvoiced.Pairs.splice(n, (SJC_ProjectList[index].BuildingQty - n));
+                    }
+                    SJC_ProjectList[index].FormingTitles.splice(n, (SJC_ProjectList[index].BuildingQty - n));
                 }
-                for (let i = 0; i < SJC_ProjectList[index].FormingInvoiceList.length; i++) {
-                    SJC_ProjectList[index].FormingInvoiceList[i].Buildings.Pairs.splice(n, (SJC_ProjectList[index].BuildingQty - n));
-                    SJC_ProjectList[index].FormingInvoiceList[i].ToBeInvoiced.Pairs.splice(n, (SJC_ProjectList[index].BuildingQty - n));
-                }
-                SJC_ProjectList[index].FormingTitles.splice(n, (SJC_ProjectList[index].BuildingQty - n));
             }
         }
         else if (SJC_ProjectList[index].BuildingQty < n) {
@@ -291,7 +312,8 @@ function SaveProjectDetails() {
                         SJC_ProjectList[index].FramingInvoiceList[i].ToBeInvoiced[j].Pairs[k].Title = SJC_ProjectList[index].FramingTitles[k];
                     }
                 }
-                
+            }
+            for (let i = 0; i < SJC_ProjectList[index].FormingInvoiceList.length; i++) {
                 for (let j = SJC_ProjectList[index].BuildingQty; j < n; j++) {
                     SJC_ProjectList[index].FormingInvoiceList[i].Buildings.Pairs.push(new PairDetails());
                     SJC_ProjectList[index].FormingInvoiceList[i].Buildings.Pairs[j].Title = SJC_ProjectList[index].FormingTitles[j];
@@ -300,7 +322,7 @@ function SaveProjectDetails() {
                 }
             }
         }
-        
+
         SJC_ProjectList[index].BuildingQty = n;
         SJC_ProjectList[index].FramingContractNo = framingContractNo.value;
         SJC_ProjectList[index].FormingContractNo = formingContractNo.value;
@@ -354,8 +376,12 @@ function DeleteProject(element) {
 }
 /**
  * 
- * @param {HTMLElement} element
+ * @param {string} stringValue
  */
-function SmallButtonClick(element) {
-
+function CurrencyToNumber(stringValue) {
+    let tempStr = "";
+    for (let i = 0; i < stringValue.length; i++) {
+        if (stringValue[i] !== '$' && stringValue[i] !== ',') { tempStr += stringValue[i]; }
+    }
+    return parseFloat(tempStr);
 }

@@ -344,7 +344,7 @@ function DrawInvoices() {
                     ]);
                 }
 
-                let sumValue = GetSumValue(1,i);
+                let sumValue = GetSumValue(1, i);
                 tableData[i].AddLastRow([
                     "Sum",
                     " ",
@@ -434,6 +434,9 @@ function ChangeEachCellInitialValues(element, percentColumnIndex, priceColumnInd
     if (TableType == "Forming" && c == 0) {
         selectedProject.FormingTitles[r] = element.value;
     }
+    if (TableType == "Framing" && c == 0) {
+        selectedProject.FramingTitles[r] = element.value;
+    }
 }
 
 function ChangeEachCell(element) {
@@ -442,13 +445,18 @@ function ChangeEachCell(element) {
     const c = GetIndexFromString(element.id, "c");
     let midValue;
     let refVal = 0;
-    
+
     if (tableData[b].ColumnType[c] == "text") {
         midValue = element.value;
     }
     else {
         midValue = parseFloat(element.value);
-        if (isNaN(midValue)) { midValue = 0; }
+        if (isNaN(midValue) || midValue < 0) { midValue = 0; }
+        if (currentPageIndex > 1) {
+            let preVal = GetPreviosValue(b, r, c);
+            if (midValue > (100 - preVal)) { midValue = 100 - preVal; }
+        }
+        else { if (midValue > 100) { midValue = 100; } }
     }
     const tableLength = tableData[0].Row[0].Column.length;
     const tableRows = tableData[0].Row.length - 1;
@@ -519,6 +527,19 @@ function GetIndexFromString(str, indexer) {
         if (found) { break; }
     }
     return parseInt(res);
+}
+
+/**
+ * 
+ * @param {number} tableIndex
+ * @param {number} rowIndex
+ * @param {number} columnIndex
+ * @returns
+ */
+function GetPreviosValue(tableIndex, rowIndex, columnIndex) {
+    const idStr = "b" + tableIndex + "-r" + rowIndex + "-c" + (columnIndex - 1).toString() + "-";
+    const el = document.getElementById(idStr);
+    return parseFloat(el.innerHTML);
 }
 
 /**
