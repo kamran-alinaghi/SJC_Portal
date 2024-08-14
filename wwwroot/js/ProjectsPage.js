@@ -11,16 +11,15 @@ import { FormingInvoice } from "./ProjectClass/FormingInvoice.js";
 const summaryBtn = document.getElementById("invoce-summary-btn");
 const saveBtn = document.getElementById("invoce-save-btn");
 const addBtn = document.getElementById("add-invoice-btn");
-const delBtn = document.getElementById("remove-invoice-btn");
 const leftBtn = document.getElementById("left-btn");
 const rightBtn = document.getElementById("right-btn");
 const projectNameHolder = document.getElementById("project-name-holder");
 const invoiceNumberHolder = document.getElementById("invoice-number-holder");
 const root = document.getElementById("root");
-const formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD'
-});
+const invoiceLabel = document.getElementById("invoice-label");
+const dateInput = document.getElementById("date-input");
+
+
 
 //Variables
 let TableType = "";
@@ -32,7 +31,10 @@ const elem = [new Table("", new DataFormat.TableDataSet())];
 elem.pop();
 let idList = [""];
 idList.pop();
-
+const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD'
+});
 
 
 GetTableName();
@@ -121,10 +123,36 @@ function ValidateProjectData() {
 function ShowProjectDetailsOnPage() {
     projectNameHolder.innerHTML = selectedProject.Title + " (" + TableType + ")";
     let dateStr = "";
-    if (TableType == "Forming") { dateStr = selectedProject.FormingInvoiceList[currentPageIndex].InvoiceDate; }
-    else { dateStr = selectedProject.FramingInvoiceList[currentPageIndex].InvoiceDate; }
-    if (currentPageIndex > 0) { invoiceNumberHolder.innerHTML = "Invoice #" + currentPageIndex + "(" + dateStr + ")"; }
-    else { invoiceNumberHolder.innerHTML = "Initial Values"; }
+    let invoiceNumberStr = "";
+    if (TableType == "Forming") {
+        dateStr = selectedProject.FormingInvoiceList[currentPageIndex].InvoiceDate;
+        invoiceNumberStr = selectedProject.FormingInvoiceList[currentPageIndex].InvoiceNumber;
+    }
+    else {
+        dateStr = selectedProject.FramingInvoiceList[currentPageIndex].InvoiceDate;
+        invoiceNumberStr = selectedProject.FramingInvoiceList[currentPageIndex].InvoiceNumber;
+    }
+
+    dateInput.disabled = false;
+    dateInput.value = dateStr;
+    if (currentPageIndex == 0) {
+        dateInput.value = selectedProject.ContractDate;
+        dateInput.disabled = true;
+    }
+
+
+    invoiceNumberHolder.style.display = "block";
+    invoiceLabel.innerHTML = "Invoice #";
+    if (currentPageIndex == 0) {
+        invoiceNumberHolder.style.display = "none";
+        invoiceLabel.innerHTML = "Initial Values";
+    }
+    else if (invoiceNumberStr.length > 0 && currentPageIndex > 0) {
+        invoiceNumberHolder.value = invoiceNumberStr;
+    }
+    else if (currentPageIndex > 0 && invoiceNumberStr.length < 1) {
+        invoiceNumberHolder.value = currentPageIndex;
+    }
 }
 
 function GetCurrentPageIndex() {
@@ -198,6 +226,17 @@ function AddEvents() {
             currentPageIndex++;
             InitializePage();
         }
+    }
+
+    invoiceNumberHolder.onchange = function () {
+        if (invoiceNumberHolder.value.length > 0) {
+            if (TableType == "Framing") { selectedProject.FramingInvoiceList[currentPageIndex].InvoiceNumber = invoiceNumberHolder.value; }
+            else { selectedProject.FormingInvoiceList[currentPageIndex].InvoiceNumber = invoiceNumberHolder.value; }
+        }
+    }
+    dateInput.onchange = function () {
+        if (TableType == "Framing") { selectedProject.FramingInvoiceList[currentPageIndex].InvoiceDate = dateInput.value; }
+        else { selectedProject.FormingInvoiceList[currentPageIndex].InvoiceDate = dateInput.value; }
     }
 }
 
@@ -478,23 +517,6 @@ function ChangeEachCell(element) {
         SetValueOfCell(b, tableRows, tableLength - 2, sumVal * 0.045, false);
         SetValueOfCell(b, tableRows, tableLength - 1, sumVal * 0.945, false);
     }
-    //else if (c == tableLength - 4) {
-    //    if (TableType == "Framing") { refVal = selectedProject.FramingBudget; }
-    //    else { refVal = selectedProject.TotalBudget - selectedProject.FramingBudget; }
-    //    SetValueOfCell(b, r, tableLength - 5, (100 * midValue / refVal), true);
-    //    SetValueOfCell(b, r, tableLength - 4, midValue, true);
-
-    //    SetValueOfCell(b, r, tableLength - 3, (midValue * 0.1), true);
-    //    SetValueOfCell(b, r, tableLength - 2, (midValue * 0.045), true);
-    //    SetValueOfCell(b, r, tableLength - 1, (midValue * 0.945), true);
-    //    SetValueOfCell(b, r, 1, (midValue * 100 / refVal), true);
-
-    //    const sumVal = GetSumValue(currentPageIndex, b);
-    //    SetValueOfCell(b, tableRows, tableLength - 4, sumVal, false);
-    //    SetValueOfCell(b, tableRows, tableLength - 3, sumVal * 0.1, false);
-    //    SetValueOfCell(b, tableRows, tableLength - 2, sumVal * 0.045, false);
-    //    SetValueOfCell(b, tableRows, tableLength - 1, sumVal * 0.945, false);
-    //}
     else {
         SetValueOfCell(b, r, c, midValue, true);
     }

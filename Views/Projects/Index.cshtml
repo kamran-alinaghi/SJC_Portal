@@ -10,22 +10,31 @@
         <div class="two-column center-element-horizental" style="margin-top:60px;">
             <span id="project-name-holder" class="project-title">Projects</span>
             <div>
-                <span id="invoice-number-holder" class="project-title" style="float:right;margin-left:30px;">Invoice #12 (12-08-2024)</span>
+                <div class="two-column" style="float:right;">
+                    <label id="invoice-label" for="invoice-number-holder" class="project-title">Invoice #</label>
+                    <input id="invoice-number-holder" type="text" />
+                </div>
             </div>
-            
         </div>
         <div class="two-column center-element-horizental">
             <button id="invoce-summary-btn" class="main-button main-button-margin main-button-width">Summary</button>
             <div>
-                <button id="invoce-save-btn" class="main-button main-button-margin main-button-width" style="float:right">Save</button>
+                <div class="main-button-margin styled-input-width two-column">
+                    <div>
+                        <label for="date-input" style="float:right;margin-right:5px;">Date:</label>
+                    </div>
+                    <div style="margin-top:3px;">
+                        <input id="date-input" class="styled-input" style="float:left;margin-left:5px;" type="date" name="date-input" value="" />
+                    </div>
+                </div>
             </div>
             <button id="add-invoice-btn" class="main-button main-button-margin main-button-width">Add</button>
             <div>
-                <button id="remove-invoice-btn" class="main-button main-button-margin main-button-width" style="float:right">Remove</button>
+                <button id="invoce-save-btn" class="main-button main-button-margin main-button-width" style="float:right">Save</button>
             </div>
         </div>
     </div>
-    
+
     <div class="three-column">
         <div class="side-bars-left">
             <button id="left-btn" type="button" class="control-button left-control-button center-element-horizental"></button>

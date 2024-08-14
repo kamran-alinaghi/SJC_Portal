@@ -2,7 +2,7 @@
 {
     public class FramingInvoice
     {
-        public int? InvoiceNumber { get; set; }
+        public string? InvoiceNumber { get; set; }
         public string? InvoiceDate { get; set; }
         public IEnumerable<PairList>? Buildings { get; set; }
         public IEnumerable<PairList>? ToBeInvoiced { get; set; }

@@ -2,7 +2,7 @@
 {
     public class FormingInvoice
     {
-        public int? InvoiceNumber { get; set; }
+        public string? InvoiceNumber { get; set; }
         public string? InvoiceDate { get; set; }
         public PairList? Buildings { get; set; }
         public PairList? ToBeInvoiced { get; set; }

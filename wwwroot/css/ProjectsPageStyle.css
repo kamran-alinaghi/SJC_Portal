@@ -122,6 +122,12 @@
     background-size: Calc(max(1.5vw,15px));
 }
 
+.left-control-button:hover, .right-control-button:hover {
+    background-color:rgb(255,255,120);
+}
+.left-control-button:active, .right-control-button:active {
+    background-color:rgb(255,210,50);
+}
 .right-control-button {
     background: url("../Resources/Images/Black-right-Arrow.png");
     background-repeat: no-repeat;
@@ -155,4 +161,36 @@
     height: 100%;
     background-color: rgb(150,220,255);
     border-top: 1px solid #009879;
+}
+
+#invoice-number-holder {
+    min-width: 50px;
+    width: 5vw;
+    font-size: Calc(max(min(2vw,28px),14px));
+    border: none;
+    outline: none;
+    background-color:rgb(220,220,255);
+    margin-left:5px;
+    min-height:27px;
+    height:3vw;
+    max-height:45px;
+}
+
+.styled-input {
+    min-width: 50px;
+    width: 8vw;
+    margin: 0px;
+    border: none;
+    outline: none;
+    background-color: rgb(220,220,255);
+}
+
+.styled-input-width {
+    min-width: 120px;
+    width: 20vw;
+    max-width: 400px;
+    float: right;
+    background-color: rgb(125, 175, 255);
+    border-radius: 10px;
+    border: 2px solid black;
 }

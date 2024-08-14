@@ -8,7 +8,7 @@ export class FramingInvoice {
     CraneCharge;
 
     constructor() {
-        this.InvoiceNumber = 0;
+        this.InvoiceNumber = "";
         this.InvoiceDate = "";
         this.Buildings = [new PairList()];
         this.Buildings.pop();
