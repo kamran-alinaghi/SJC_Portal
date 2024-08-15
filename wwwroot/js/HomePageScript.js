@@ -188,10 +188,12 @@ function ProjectBtnClick(element) {
  * @param {HTMLElement} element
  */
 function RedirectToTable(element) {
-    //alert(element.getAttribute("data-model-name") + "/" + element.innerHTML);
+    SaveTableName(element.innerHTML, element.getAttribute("data-model-name"));
     if (element.innerHTML == "Framing" || element.innerHTML == "Forming") {
-        SaveTableName(element.innerHTML, element.getAttribute("data-model-name"));
         window.location.href = "/projects/index";
+    }
+    else if (element.innerHTML == "Summary") {
+        window.location.href = "/projects/InvoiceSummary";
     }
 }
 //temporary -------------------------------------------------
