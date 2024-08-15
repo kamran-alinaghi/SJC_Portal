@@ -49,7 +49,7 @@ function GetTableName() {
                 GetInvoiceList();
             }
             else {
-                window.location.href = "/user/login";
+                window.location.href = "/user/index";
             }
         });
 }

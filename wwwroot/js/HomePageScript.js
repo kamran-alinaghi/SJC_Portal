@@ -294,6 +294,7 @@ function SaveProjectDetails() {
                         SJC_ProjectList[index].FormingInvoiceList[i].ToBeInvoiced.Pairs.splice(n, (SJC_ProjectList[index].BuildingQty - n));
                     }
                     SJC_ProjectList[index].FormingTitles.splice(n, (SJC_ProjectList[index].BuildingQty - n));
+                    SJC_ProjectList[index].BuildingQty = n;
                 }
             }
         }
@@ -321,9 +322,9 @@ function SaveProjectDetails() {
                     SJC_ProjectList[index].FormingInvoiceList[i].ToBeInvoiced.Pairs[j].Title = SJC_ProjectList[index].FormingTitles[j];
                 }
             }
+            SJC_ProjectList[index].BuildingQty = n;
         }
 
-        SJC_ProjectList[index].BuildingQty = n;
         SJC_ProjectList[index].FramingContractNo = framingContractNo.value;
         SJC_ProjectList[index].FormingContractNo = formingContractNo.value;
         UpdateDB(SJC_ProjectList[index]);

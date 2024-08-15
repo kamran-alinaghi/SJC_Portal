@@ -18,6 +18,18 @@ namespace SJC_Portal.Controllers
             _contex = contex;
         }
 
+        public IActionResult Index()
+        {
+            UserInfo? user = GetUserInSession();
+            if (user == null) { 
+                return RedirectToAction("Login", "User");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
         [HttpPost]
         public IActionResult Index(string username, string password)
         {

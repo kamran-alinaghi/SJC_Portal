@@ -3,6 +3,9 @@ using SJC_Portal.Data;
 using Newtonsoft.Json;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Bson.Serialization;
+using SJC_Portal.Data.Enums;
+using SJC_Portal.Data.Parameters;
 
 namespace SJC_Portal.Controllers
 {
@@ -20,6 +23,14 @@ namespace SJC_Portal.Controllers
             return View();
         }
 
+        public IActionResult InvoiceSummary() {
+           
+            return View();
+        }
+
+        public IActionResult ProjectSummary() {
+            return View();
+        }
 
 
 
@@ -36,7 +47,6 @@ namespace SJC_Portal.Controllers
             StreamReader streamReader = new StreamReader(_contex.HttpContext.Request.Body);
             return JsonConvert.DeserializeObject<T>(streamReader.ReadToEndAsync().Result);
         }
-
         
     }
 }

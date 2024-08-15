@@ -4,11 +4,13 @@
 }
 
 .dashboard-container{
+    position:relative;
     width:80vw;
     max-width:1200px;
     min-width:300px;
     height:80vh;
     margin:auto;
+    top:100px;
 }
 .dashboard-form{
     display:grid;
