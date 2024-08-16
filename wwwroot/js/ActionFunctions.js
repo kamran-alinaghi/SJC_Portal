@@ -1,6 +1,33 @@
 ﻿import { SJC_Project } from "./ProjectClass/SJC_Project.js";
 
+/**
+ * 
+ * @param {HTMLElement} element
+ * @param {string[]} classList1
+ * @param {string[]} classList2
+ */
+export function ToggleClass(element, classList1, classList2) {
+    let isRemoved = false;
+    for (let i = 0; i < classList1.length; i++) {
+        if (RemoveClass(element, classList1[i])) {
+            isRemoved = true;
+        }
+    }
 
+    if (isRemoved) {
+        for (let i = 0; i < classList2.length; i++) {
+            AddClass(element, classList2[i]);
+        }
+    }
+    else {
+        for (let i = 0; i < classList2.length; i++) {
+            RemoveClass(element, classList2[i]);
+        }
+        for (let i = 0; i < classList1.length; i++) {
+            AddClass(element, classList1[i]);
+        }
+    }
+}
 /**
  * 
  * @param {HTMLElement} element

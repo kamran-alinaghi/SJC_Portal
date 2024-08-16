@@ -1,0 +1,124 @@
+﻿.main-container {
+    position:relative;
+    top:60px;
+}
+
+#canvas-graph {
+    width: 20vw;
+    height: 20vw;
+    min-width: 320px;
+    min-height: 320px;
+    background-color: yellow;
+    margin:0px auto;
+}
+
+.three-column{
+    display:grid;
+    grid-template-columns:auto Calc(max(320px,65vw)) auto;
+}
+
+.two-column {
+    display: grid;
+    grid-template-columns: Calc(max(80px,15vw)) auto;
+}
+
+.horizontally-middle {
+    grid-column-start:2;
+}
+
+.bar-wrap {
+    width: 100%;
+    height: 34px;
+    border-radius: 10px;
+    border: 2px solid green;
+    background-color: white;
+    margin:5px;
+}
+
+.gray-bar {
+    width: 100%;
+    height: 30px;
+    background-color: rgb(207, 206, 206);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.green-bar {
+    height: 30px;
+    background-color: greenyellow;
+    border-radius: 10px;
+    z-index: 1;
+    position: relative;
+    left: 0px;
+    top: -30px;
+}
+
+.hidden-section {
+    opacity: 0;
+    height: 0px;
+    visibility: hidden;
+}
+
+@keyframes hideChart{
+    from {
+        opacity: 1;
+        height: auto;
+        visibility:visible;
+    }
+    to {
+        opacity: 0;
+        height: 0px;
+        visibility:hidden;
+    }
+}
+
+@keyframes expandChart{
+    from {
+        opacity: 0;
+        height: 0px;
+        visibility: hidden;
+    }
+    to {
+        opacity: 1;
+        height: auto;
+        visibility: visible;
+    }
+}
+
+.hide-chart{
+    animation-name:hideChart;
+    animation-duration:0.5s;
+    animation-fill-mode:forwards;
+}
+
+.expand-chart {
+    animation-name: expandChart;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+.each-section{
+    margin:15px 0px;
+}
+
+.bar-label{
+    margin:5px;
+    margin-left:15px;
+    position:relative;
+    top:5px;
+}
+
+.item-details {
+    position: relative;
+    top: 3px;
+    z-index: 5;
+    font-size:Calc(max(0.8vw,10px));
+}
+
+.project-button{
+    width:60%;
+    border-radius:10px;
+    background-color:rgb(100, 200, 255);
+    margin-top:15px;
+}
+

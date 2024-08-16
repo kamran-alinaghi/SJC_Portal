@@ -193,7 +193,7 @@ function RedirectToTable(element) {
         window.location.href = "/projects/index";
     }
     else if (element.innerHTML == "Summary") {
-        window.location.href = "/projects/InvoiceSummary";
+        window.location.href = "/projects/Summary";
     }
 }
 //temporary -------------------------------------------------

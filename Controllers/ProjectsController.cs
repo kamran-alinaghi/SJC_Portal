@@ -23,15 +23,20 @@ namespace SJC_Portal.Controllers
             return View();
         }
 
-        public IActionResult InvoiceSummary() {
-           
+        public IActionResult InvoiceSummary() 
+        {
             return View();
         }
 
-        public IActionResult ProjectSummary() {
+        public IActionResult ProjectSummary() 
+        {
             return View();
         }
 
+        public IActionResult Summary()
+        {
+            return View();
+        }
 
 
 

@@ -238,6 +238,8 @@ function AddEvents() {
         if (TableType == "Framing") { selectedProject.FramingInvoiceList[currentPageIndex].InvoiceDate = dateInput.value; }
         else { selectedProject.FormingInvoiceList[currentPageIndex].InvoiceDate = dateInput.value; }
     }
+
+    summaryBtn.onclick = function () { window.location.href = "/Projects/Summary"; };
 }
 
 

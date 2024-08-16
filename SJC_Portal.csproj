@@ -8,7 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\js\Elements\BarChart.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\css\DashboardStyle.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\SummaryStyle.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\Elements\BarChart.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +26,10 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Resources\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\Elements\BarChart.js" />
   </ItemGroup>
 
 </Project>
