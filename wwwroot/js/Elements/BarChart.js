@@ -44,10 +44,12 @@ export class BarChart extends BaseElement {
     /**
      * 
      * @param {string} color
+     * @param {number} buildingPercentage
      * @returns
      */
-    GetProjectGuide(color) {
-        let result = '<div style="background-color:' + color + '; margin:5px;text-align:center;">' + this.ButtonDetails.Title + '</div>';
+    GetProjectGuide(color, buildingPercentage) {
+        let result = '<div style="background-color:' + color + '; margin:5px;text-align:center;">' +
+            this.ButtonDetails.Title + ' (' + buildingPercentage.toFixed(2).toString() + '%)</div>';
         return result;
     }
 

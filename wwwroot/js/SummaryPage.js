@@ -114,6 +114,7 @@ function GetFramingItemPercentage(buildingIndex, itemIndex = null) {
         }
     }
     else {
+        const buildingBudget = GetBuildingBudget(buildingIndex);
         let accumulated = 0;
 
         for (let i = 0; i < selectedProject.FramingTitles.length; i++) {
@@ -121,16 +122,18 @@ function GetFramingItemPercentage(buildingIndex, itemIndex = null) {
             for (let j = 1; j < selectedProject.FramingInvoiceList.length; j++) {
                 row += selectedProject.FramingInvoiceList[j].Buildings[buildingIndex].Pairs[i].Percent;
             }
-            accumulated += row;
+            const val = row * selectedProject.FramingInvoiceList[0].Buildings[buildingIndex].Pairs[i].Value / buildingBudget;
+            accumulated += val;
             count++;
         }
         let row2 = 0;
         for (let i = 1; i < selectedProject.FormingInvoiceList.length; i++) {
             row2 += selectedProject.FormingInvoiceList[i].Buildings.Pairs[buildingIndex].Percent;
         }
-        accumulated += row2;
+        const val2 = row2 * selectedProject.FormingInvoiceList[0].Buildings.Pairs[buildingIndex].Value / buildingBudget;
+        accumulated += val2;
         count++;
-        result = accumulated / count;
+        result = accumulated;
     }
     return result;
 }
@@ -155,7 +158,7 @@ function DrawChartGuide() {
     chartGuide.innerHTML = '';
     for (let i = 0; i < barChartObj.length; i++) {
         selectedColors.push(GetRandomColor(i))
-        chartGuide.innerHTML += barChartObj[i].GetProjectGuide(selectedColors[i]);
+        chartGuide.innerHTML += barChartObj[i].GetProjectGuide(selectedColors[i], GetBuildingBudget(i) * 100 / selectedProject.TotalBudget);
     }
 }
 
@@ -210,11 +213,17 @@ function DrawBudgets() {
     chartBudgets.innerHTML = '<div><b>Total Invoiced: </b><b style="color:blue;">' + formatter.format(totalInvoiced) + '</b></div><div><b>Out of:  </b><b style="color:green;">' + formatter.format(selectedProject.TotalBudget) + '</b></div>';
 }
 
-function GetTotalInvoicedBudget() {
+/**
+ * 
+ * @param {number} buildingIndex
+ * @returns
+ */
+function GetBuildingBudget(buildingIndex) {
     let res = 0;
-    for (let i = 0; i < barChartObj.length; i++) {
-        res += barChartObj[i].ButtonDetails.Percent * selectedProject.FramingBudget / 100;
+    for (let i = 0; i < selectedProject.FramingInvoiceList[0].Buildings[buildingIndex].Pairs.length; i++) {
+        res += selectedProject.FramingInvoiceList[0].Buildings[buildingIndex].Pairs[i].Value;
     }
+    res += selectedProject.FormingInvoiceList[0].Buildings.Pairs[buildingIndex].Value;
     return res;
 }
 
