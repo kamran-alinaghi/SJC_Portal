@@ -194,3 +194,47 @@
     border-radius: 10px;
     border: 2px solid black;
 }
+
+.summary-container{
+    width:100vw;
+    height:100vh;
+    position:fixed;
+    background-color:rgba(0,0,0,0.8);
+    top:0px;
+    left:0px;
+    z-index:20;
+    visibility:hidden;
+}
+.summary-frame{
+    width:60vw;
+    height:80vh;
+    min-width:320px;
+    background-color:rgb(150,220,255);
+    position:relative;
+    margin: 10vh auto;
+    border-radius:10px;
+}
+.summary-table{
+    width:54vw;
+    height:72vh;
+    position:relative;
+    overflow-y:auto;
+    top:4vh;
+    left:3vw;
+}
+
+.summary-close-button {
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    border-style: none;
+    background-color: coral;
+    font-size: 30px;
+    background-image: url("../Resources/Images/Close-sign.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    float:right;
+}
+.summary-close-button:hover {
+    background-color: orangered;
+}
