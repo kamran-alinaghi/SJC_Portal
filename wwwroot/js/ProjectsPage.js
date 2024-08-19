@@ -450,6 +450,7 @@ function ChangeEachCellInitialValues(element, percentColumnIndex, priceColumnInd
     const r = GetIndexFromString(element.id, "r");
     const c = GetIndexFromString(element.id, "c");
     let midValue;
+    let tempBudget = 0;
     if (tableData[b].ColumnType[c] == "text") {
         midValue = element.value;
     }
@@ -457,14 +458,20 @@ function ChangeEachCellInitialValues(element, percentColumnIndex, priceColumnInd
         midValue = parseFloat(element.value);
         if (isNaN(midValue)) { midValue = 0; }
     }
+    if (TableType == "Framing") {
+        tempBudget = selectedProject.FramingBudget;
+    }
+    else {
+        tempBudget = selectedProject.TotalBudget - selectedProject.FramingBudget;
+    }
 
     if (tableData[b].ColumnEditable[c]) {
         if (c == percentColumnIndex) {
-            SetValueOfCell(b, r, priceColumnIndex, (midValue * selectedProject.FramingBudget / 100), true);
+            SetValueOfCell(b, r, priceColumnIndex, (midValue * tempBudget / 100), true);
             SetValueOfCell(b, r, percentColumnIndex, midValue, true);
         }
         else if (c == priceColumnIndex) {
-            SetValueOfCell(b, r, percentColumnIndex, (100 * midValue / selectedProject.FramingBudget), true);
+            SetValueOfCell(b, r, percentColumnIndex, (100 * midValue / tempBudget), true);
             SetValueOfCell(b, r, priceColumnIndex, midValue, true);
         }
         else {
