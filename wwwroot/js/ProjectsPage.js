@@ -145,7 +145,8 @@ function DrawTable() {
     }
     else {
         DrawInvoices();
-        summaryBtn.disabled = false;
+        if (TableType == "Framing") { summaryBtn.disabled = false; }
+        else { summaryBtn.disabled = true; }
     }
 }
 
@@ -160,7 +161,7 @@ function DrawSummaryTable() {
         summaryTableDataSet.AddRow(["Building Name", "Amount", "10% Holdback", "GST", "Invoice"]);
         for (let i = 0; i < sumArray.length; i++) {
             summaryTableDataSet.AddRow([selectedProject.FormingTitles[i], formatter.format(sumArray[i]), formatter.format(sumArray[i] * 0.1),
-                formatter.format(sumArray[i] * 0.045), formatter.format(sumArray[i] * 0.945)]);
+            formatter.format(sumArray[i] * 0.045), formatter.format(sumArray[i] * 0.945)]);
             totalCharge += sumArray[i];
         }
         summaryTableDataSet.AddLastRow(["Sum", formatter.format(totalCharge), formatter.format(totalCharge * 0.1),
