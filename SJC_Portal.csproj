@@ -9,12 +9,14 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\js\Elements\BarChart.js" />
+    <Content Remove="wwwroot\js\Elements\Colors.js" />
   </ItemGroup>
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\css\DashboardStyle.css" />
     <_ContentIncludedByDefault Remove="wwwroot\css\SummaryStyle.css" />
     <_ContentIncludedByDefault Remove="wwwroot\js\Elements\BarChart.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\Elements\Colors.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +32,7 @@
 
   <ItemGroup>
     <None Include="wwwroot\js\Elements\BarChart.js" />
+    <None Include="wwwroot\js\Elements\Colors.js" />
   </ItemGroup>
 
 </Project>

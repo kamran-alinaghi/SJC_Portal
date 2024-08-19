@@ -4,17 +4,17 @@
 }
 
 #canvas-graph {
-    width: 20vw;
-    height: 20vw;
-    min-width: 320px;
-    min-height: 320px;
-    background-color: yellow;
-    margin:0px auto;
+    margin:0px;
 }
 
 .three-column{
     display:grid;
-    grid-template-columns:auto Calc(max(320px,65vw)) auto;
+    grid-template-columns:auto Calc(max(320px,72vw)) auto;
+}
+
+.chart-three-column {
+    display: grid;
+    grid-template-columns: auto auto auto;
 }
 
 .two-column {
@@ -117,8 +117,21 @@
 
 .project-button{
     width:60%;
+    height:50px;
     border-radius:10px;
     background-color:rgb(100, 200, 255);
     margin-top:15px;
 }
 
+.chart-guide {
+    width: 24vw;
+    min-width: 320px;
+}
+
+.chart-budgets {
+    width: 24vw;
+    min-width: 320px;
+    min-height: 320px;
+    height: 20vw;
+    
+}

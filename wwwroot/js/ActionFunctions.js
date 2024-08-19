@@ -151,6 +151,23 @@ export function ToggleBigBoxVisibility(element) {
     }
 }
 
+/**
+ * 
+ * @param {SJC_Project} project
+ * @returns
+ */
+export function GetAllInvoicedValue(project) {
+    let result = 0;
+    for (let i = 1; i < project.FramingInvoiceList.length; i++) {
+        for (let j = 0; j < project.FramingInvoiceList[i].Buildings.length; j++) {
+            for (let k = 0; k < project.FramingInvoiceList[i].Buildings[j].Pairs.length; k++) {
+                result += project.FramingInvoiceList[i].Buildings[j].Pairs[k].Percent;
+            }
+        }
+    }
+    return result;
+}
+
 export function toUnicodeVariant(str, variant, flags) {
     const offsets = {
         m: [0x1d670, 0x1d7f6],

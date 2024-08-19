@@ -40,5 +40,17 @@ export class BarChart extends BaseElement {
         result += '<div></div>';
         return result;
     }
+
+    /**
+     * 
+     * @param {string} color
+     * @returns
+     */
+    GetProjectGuide(color) {
+        let result = '<div style="background-color:' + color + '; margin:5px;text-align:center;">' + this.ButtonDetails.Title + '</div>';
+        return result;
+    }
+
+    
 }
 
