@@ -23,19 +23,28 @@ namespace SJC_Portal.Controllers
             return View();
         }
 
-        public IActionResult InvoiceSummary() 
+        public IActionResult InvoiceSummary()
         {
             return View();
         }
 
-        public IActionResult ProjectSummary() 
+        public IActionResult ProjectSummary()
         {
             return View();
         }
 
         public IActionResult Summary()
         {
-            return View();
+            if (_contex.HttpContext != null)
+            {
+                string? tablename = _contex.HttpContext.Session.GetString("tableName");
+                if (tablename != null && tablename.Length > 0)
+                {
+                    return View();
+                }
+                else { return RedirectToAction("Index", "Home"); }
+            }
+            else { return RedirectToAction("Index", "Home"); }
         }
 
 
@@ -52,6 +61,6 @@ namespace SJC_Portal.Controllers
             StreamReader streamReader = new StreamReader(_contex.HttpContext.Request.Body);
             return JsonConvert.DeserializeObject<T>(streamReader.ReadToEndAsync().Result);
         }
-        
+
     }
 }
