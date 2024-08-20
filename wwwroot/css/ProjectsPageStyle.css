@@ -216,6 +216,7 @@
 }
 .summary-table{
     width:54vw;
+    min-width:288px;
     height:72vh;
     position:relative;
     overflow-y:auto;
