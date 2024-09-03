@@ -14,6 +14,7 @@ let projectDetailsContainer = document.getElementById("project-details-container
 let saveEditProjectButton = document.getElementById("save-edit-project-button");
 let delProject = document.getElementById("del-edit-project-button");
 let editButtons = document.getElementsByClassName("edit-button");
+const allInputs = document.getElementsByTagName("input");
 
 //Inputs
 const titleInput = document.getElementById("Title-input");
@@ -161,6 +162,10 @@ function ImpelimentEvents() {
     pastProjectsButton.onclick = function (e) { return Funcs.ToggleBigBoxVisibility(e.target); }
     totalBudgetInput.onchange = function (e) { return SetFormatting(totalBudgetInput, totalBudgetInput.value); };
     framingBudgetInput.onchange = function (e) { return SetFormatting(framingBudgetInput, framingBudgetInput.value); };
+
+    for (let i = 0; i < allInputs.length; i++) {
+        allInputs[i].onclick = function () { allInputs[i].select(); }
+    }
 }
 
 

@@ -203,6 +203,7 @@ function AddEvents() {
         else {
             el.onchange = function (e) { return ChangeEachCell(e.target); }
         }
+        el.onclick = function () { el.select(); };
     }
     saveBtn.onclick = function () { return UpdateProjectInvoices(selectedProject); };
     addBtn.onclick = function () { return AddInvoice(); };
