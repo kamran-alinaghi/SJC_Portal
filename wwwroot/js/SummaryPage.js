@@ -210,7 +210,9 @@ function DrawCanvasArc(percent) {
 
 function DrawBudgets() {
     chartBudgets.innerHTML = "";
-    chartBudgets.innerHTML = '<div><b>Total Invoiced: </b><b style="color:blue;">' + formatter.format(totalInvoiced) + '</b></div><div><b>Out of:  </b><b style="color:green;">' + formatter.format(selectedProject.TotalBudget) + '</b></div>';
+    chartBudgets.innerHTML = '<div><b>Total Invoiced: </b><b style="color:blue;">' + formatter.format(totalInvoiced) +
+        '</b></div><div><b>10% Holdback: </b><b style="color:rgb(150,30,0);">' + formatter.format(totalInvoiced * 0.1) +
+        '</b></div><div><b>Total Budget:  </b><b style="color:green;">' + formatter.format(selectedProject.TotalBudget) + '</b></div>';
 }
 
 /**
