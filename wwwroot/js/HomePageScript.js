@@ -110,15 +110,23 @@ function DeleteProjectFromDB(project) {
         });
 }
 
-function SaveTableName(name, id) {
+/**
+ * 
+ * @param {string} tableName
+ * @param {string} id
+ * @param {string} redirectLink
+ */
+function SaveTableName(tableName, id, redirectLink) {
     const param = {
         _id: id,
-        Name: name
+        Name: tableName
     }
     $.post("/apis/SaveTableTitle",
         JSON.stringify(param),
         function (data, status) {
-
+            if (status == "success") {
+                window.location.href = redirectLink;
+            }
         });
 }
 
@@ -193,12 +201,11 @@ function ProjectBtnClick(element) {
  * @param {HTMLElement} element
  */
 function RedirectToTable(element) {
-    SaveTableName(element.innerHTML, element.getAttribute("data-model-name"));
     if (element.innerHTML == "Framing" || element.innerHTML == "Forming") {
-        window.location.href = "/projects/index";
+        SaveTableName(element.innerHTML, element.getAttribute("data-model-name"), "/projects/index");
     }
     else if (element.innerHTML == "Summary") {
-        window.location.href = "/projects/Summary";
+        SaveTableName(element.innerHTML, element.getAttribute("data-model-name"), "/projects/Summary");
     }
 }
 //temporary -------------------------------------------------
